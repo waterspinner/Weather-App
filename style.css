@@ -49,3 +49,29 @@ body {
     width: 15px;
     margin: 0 15px;
   }
+
+.city-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 7vh;
+  width: 10%;
+  border: 2px solid black;
+  margin: 10px;
+}
+
+  .city-search { 
+    margin: 7px;
+  }
+
+  .city-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 16vh;
+    width: 15%;
+    border: 2px solid black;
+    margin: 10px;
+  }

@@ -53,3 +53,47 @@ window.addEventListener('load', () => {
 
 console.log(GeolocationPosition);
 console.log(GeolocationCoordinates);
+
+
+//search bar function 
+
+
+
+//determing the constant of one of the id functions
+var inputVal = document.querySelector('#city-input');
+var btn = document.querySelector('#add');
+var city = document.querySelector('#city-output');
+var descrip = document.querySelector('#description');
+var temp = document.querySelector('#temp');
+var sunriseSearch = document.querySelector('#sunrise-search');
+var sunsetSearch = document.querySelector('#sunset-search');
+
+//api returns temp in Kelvin, function to convert
+function convertion(val){
+    return (val - 273).toFixed(2)
+}
+
+//collect info with fetch
+btn.addEventListener('click', () => {
+    const base = 'https://api.openweathermap.org/data/2.5/weather?q='+inputVal.value+'&appid='+api;
+
+    fetch(base).then((response) => {
+        return response.json();
+    })
+
+    .then(data => {
+        //collect info from fetch
+        var nameVal = data.name;
+        var {description} = data.weather[0];
+        var {temp} = data.main;
+        var { sunrise, sunset } = data.sys;
+        const sunriseGMT = new Date(sunrise * 1000);
+        const sunsetGMT = new Date(sunset * 1000);
+
+        city.innerHTML = `Weather of <span>${nameVal}</span>`;
+        temp.innerHTML = `Temperature: <span>${convertion(temp)}</span>`;
+        descrip.innerHTML = `Sky Conditions: <span>${description}</span>`;
+        sunriseSearch.innerHTML = `Sunrise: <span>${sunriseGMT}</span>`;
+        sunsetSearch.innerHTML = `Sunset: <span>${sunsetGMT}</span>`;
+    })
+})
