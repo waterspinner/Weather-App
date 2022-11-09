@@ -64,13 +64,13 @@ var inputVal = document.querySelector('#city-input');
 var btn = document.querySelector('#add');
 var city = document.querySelector('#city-output');
 var descrip = document.querySelector('#description');
-var temp = document.querySelector('#temp');
+var tempMain = document.querySelector('#temp');
 var sunriseSearch = document.querySelector('#sunrise-search');
 var sunsetSearch = document.querySelector('#sunset-search');
 
 //api returns temp in Kelvin, function to convert
 function convertion(val){
-    return (val - 273).toFixed(2)
+    return (val - 273) * 9/5 + 32;
 }
 
 //collect info with fetch
@@ -91,9 +91,14 @@ btn.addEventListener('click', () => {
         const sunsetGMT = new Date(sunset * 1000);
 
         city.innerHTML = `Weather of <span>${nameVal}</span>`;
-        temp.innerHTML = `Temperature: <span>${convertion(temp)}</span>`;
+        tempMain.innerHTML = `Temperature: <span>${convertion(temp).toFixed(2)}</span> F`;
         descrip.innerHTML = `Sky Conditions: <span>${description}</span>`;
         sunriseSearch.innerHTML = `Sunrise: <span>${sunriseGMT}</span>`;
         sunsetSearch.innerHTML = `Sunset: <span>${sunsetGMT}</span>`;
+
+        console.log(data);
+        
     })
 })
+
+console.log(temp);
