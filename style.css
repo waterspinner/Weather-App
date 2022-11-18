@@ -55,23 +55,49 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 7vh;
-  width: 10%;
+  height: 8vh;
+  width: 15%;
   border: 2px solid black;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+.city-search { 
+  margin: 7px;
+}
+
+.city-display {
+  display: flex;
+  flex-direction: column;
+  height: 20vh;
+  width: 30%;
+  border: 2px solid black;
+  border-radius: 5px;
   margin: 10px;
 }
 
-  .city-search { 
-    margin: 7px;
-  }
+.city-text {
+  padding: 2px;
+}
 
-  .city-display {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 16vh;
-    width: 15%;
-    border: 2px solid black;
-    margin: 10px;
+#city-output {
+  padding: 5px 0;
+  text-align: center;
+  background: #0548b5;
+  color: white;
+  width: 100%;
+  height: 40px;
+}
+#city-output span {
+  color: red;
+}
+
+@media (max-width: 400px) {
+  .city-box{
+    width: 80%;
   }
+  .city-display {
+    height: 30vh;
+    width: 80%;
+  }
+}
