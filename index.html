@@ -27,18 +27,27 @@
             <h4>Sunset: <span class="sunset">No Information Available</span> </h4>
         </div>
         <div class="city-box">
+            <h2 class="city-box-header">Input city for current weather</h2>
             <input class="city-search" type="text" placeholder="Enter any city..." id="city-input">
-            <input class= "city-submit" type="submit" value="Submit" id="add">
-
-            <button placeholder="submit" id="add"></button>
+            <input class= "city-submit" type="submit" value="Submit" id="current-add">
         </div>
         <div class="city-display">
-            <h2 class="city-text"  id="city-output"></h2>
+            <h2 class="city-text city-bold"  id="city-output"></h2>
             <p  class="city-text" id="description"></p>
             <p  class="city-text" id="temp"></p>
             <p  class="city-text" id="sunrise-search"></p>
             <p  class="city-text" id="sunset-search"></p>
         </div> 
+        
+        <div class="city-box">
+            <input class="city-search" type="text" placeholder="Enter any city..." id="city-forecast-input">
+            <input class= "city-submit" type="submit" value="Submit" id="forecast-add">
+        </div> 
+
+        <div class="city-display" id="forecast-display">
+           <h2 class ="city-text city-bold" id="forecast-city-output"></h2>
+           <p class="city-text" id="temp"></p> 
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
