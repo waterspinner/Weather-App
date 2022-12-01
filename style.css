@@ -7,6 +7,14 @@
 
 body {
     font-family: 'Inconsolata', monospace;
+    background: rgb(165, 170, 252);
+    background: radial-gradient(
+    circle,
+    rgba(60, 95, 252, 0.633) 0%,
+    rgba(43, 67, 146, 0.841) 35%,
+    rgb(44, 47, 255) 100%
+  );
+  background-attachment: fixed;
 }
 
 .container {
@@ -16,13 +24,6 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background: rgb(165, 170, 252);
-    background: radial-gradient(
-    circle,
-    rgba(60, 95, 252, 0.633) 0%,
-    rgba(43, 67, 146, 0.841) 35%,
-    rgb(44, 47, 255) 100%
-  );
 }
 
 .weather {
@@ -55,8 +56,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 8vh;
-  width: 15%;
+  height: 12vh;
+  width: 25%;
   border: 2px solid black;
   margin: 10px;
   border-radius: 5px;
@@ -70,7 +71,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 20vh;
-  width: 30%;
+  width: 50%;
   border: 2px solid black;
   border-radius: 5px;
   margin: 10px;
@@ -80,7 +81,7 @@ body {
   padding: 2px;
 }
 
-#city-output {
+.city-bold {
   padding: 5px 0;
   text-align: center;
   background: #0548b5;
@@ -88,8 +89,16 @@ body {
   width: 100%;
   height: 40px;
 }
-#city-output span {
+.city-bold span {
   color: red;
+}
+
+.city-box-header {
+  font-size: 1rem;
+}
+
+#forecast-display .forecast-temp {
+  padding-top: 15px;
 }
 
 @media (max-width: 400px) {
