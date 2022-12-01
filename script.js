@@ -106,11 +106,45 @@ console.log(temp);
 
 //5 day forecast 3hr Int.
 
+//convert from m/s to mph
+function convertWindSpeed(val){
+    return val * 2.23694;
+}
+
+//convert wind direction to cardinal direction
+function convertDirection(val) {
+    let direction = "";
+    if (val >= 340 || val < 30){
+        return direction = "North";
+    }
+    else if (val >= 30 && val < 70){
+        return direction = "North East";
+    }
+    else if (val >= 70 && val < 120){
+        return direction = "East";
+    }
+    else if (val >= 120 && val < 150){
+        return direction = "South East";
+    }
+    else if (val >= 150 && val < 210){
+        return direction = "South";
+    }
+    else if (val >= 210 && val < 240){
+        return direction = "South West";
+    }
+    else if (val >= 240 && val < 290){
+        return direction = "West";
+    }
+    else {
+        return direction = "North West";
+    }    
+};
 //variables for forecast
  var forecastAddBtn = document.querySelector('#forecast-add');
  var forecastInput = document.querySelector('#city-forecast-input');
- var forecastDisplay = document.querySelector('#forecast-display');
+ var forecastTemp = document.querySelector('#forecast-temp');
  var forecastCity = document.querySelector('#forecast-city-output');
+ var forecastDescription = document.querySelector('#weather-description');
 
  //event listener for forecast submit
  forecastAddBtn.addEventListener('click', () => {
@@ -124,19 +158,48 @@ console.log(temp);
         console.log(fetchResponse);
         let forecastCityString = `5 Day forecast for <span>${fetchResponse.city.name}`;
         forecastCity.innerHTML = forecastCityString;
-        
+        console.log(fetchResponse.list[0].weather[0].description);
         //iteration through array
         for( threeHourInt of fetchResponse.list) {
-            var {temp} = threeHourInt.main
-            let forecastString = `Temp at <span>${threeHourInt.dt_txt}<span> is <span>${conversion(temp).toFixed(2)} *F`;
-            forecastDisplay.innerHTML+= forecastString;
-        
+            //assining data to variables
+            var {temp} = threeHourInt.main;
+            var {description} = threeHourInt.weather[0];
+            var {speed} = threeHourInt.wind;
+            var {deg} = threeHourInt.wind;
+
+            //create new element for temp and time
+                const newTemp = document.createElement("p");
+
+            //assing ID value of new element
+                newTemp.setAttribute("class", "forecast-temp");
+
+            //create string and append to created element
+                const tempString = document.createTextNode(`Temp at ${threeHourInt.dt_txt} is ${conversion(temp).toFixed(2)} *F`);
+                newTemp.appendChild(tempString);
+                console.log(newTemp.classList);
+
+            //repeat process for weather description
+                const newDescription = document.createElement("p");
+                const descriptionString = document.createTextNode(`Weather: ${description}`)
+                newDescription.appendChild(descriptionString);
+
+            //repeat process for Wind speed
+                const windSpeed = document.createElement("p");
+                const windString = document.createTextNode(`Wind speed is ${convertWindSpeed(speed).toFixed(1)}mph`)
+                windSpeed.appendChild(windString);
+
+            //repeat process for wind direction
+                const windDirection = document.createElement("p");
+                const directionString = document.createTextNode(`Wind Direction: ${convertDirection(deg)}`);
+                windDirection.appendChild(directionString);
+
+            //append newly created elements to existing element in document
+                const currentP = document.getElementById("forecast-display");
+                currentP.appendChild(newTemp);
+                currentP.appendChild(newDescription);
+                currentP.appendChild(windSpeed);
+                currentP.appendChild(windDirection);
+
         }
     })
 });
-//go through forecast and assign time object?
-    /* need to assign time.temp, time.description, time.windspeed, time.winddirection
-    Some sort of iteration, possibly assiging all properties during the iteration of dt? 
-    */
-    
-//assign data to variables put down in hmtl
