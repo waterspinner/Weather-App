@@ -7,6 +7,8 @@ const tempF = document.querySelector('.f');
 const desc = document.querySelector('.desc');
 const sunriseDOM = document.querySelector('.sunrise');
 const sunsetDOM = document.querySelector('.sunset');
+const currentWindSpeed = document.querySelector('.current-windspeed');
+const currentWindDir = document.querySelector('.current-wind-direction');
 
 window.addEventListener('load', () => {
     let long;
@@ -22,11 +24,13 @@ window.addEventListener('load', () => {
             fetch(base).then((response) => {
                 return response.json();
             })
+            
             .then((data) => {
-                const {temp} = data.main
+                const {temp, humidity} = data.main
                 const place = data.name
                 const { description, icon } = data.weather[0];
                 const { sunrise, sunset } = data.sys;
+                const {deg, speed} = data.wind;
 
                 const iconURL = 'https://openweathermap.org/img/wn/'+icon+'@2x.png';
                 const fahrenheit = (temp * 9) / 5 + 32;
@@ -43,16 +47,17 @@ window.addEventListener('load', () => {
                 tempF.textContent = `${fahrenheit.toFixed(2)} *F`;
                 sunriseDOM.textContent = `${sunriseGMT}`;
                 sunsetDOM.textContent = `${sunsetGMT}`;
+                currentWindSpeed.textContent =`${speed}`;
+                currentWindDir.textContent = `${deg}`;
 
-                console.log(position);
+
+
+             console.log(data);
             });
         });
     }
 });
 
-
-console.log(GeolocationPosition);
-console.log(GeolocationCoordinates);
 
 
 //search bar function 
