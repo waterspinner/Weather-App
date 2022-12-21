@@ -13,9 +13,15 @@
 </head>
 
 <body>
-    <div class="main">
+    <div class="title-div">
+        <h1 class="dash">Weather Dashboard</h1>
+        <div class="city-box">
+            <h2 class="city-box-header">Input city 5 day forecast</h2>
+            <input class="city-search" type="text" placeholder="Enter any city..." id="city-forecast-input">
+            <input class= "city-submit" type="submit" value="Submit" id="forecast-add">
+        </div>
+    </div> 
         <div class="container">
-
             <div class="current-display">
                 <img src="" srcset="" id="weather-icon">
                 <div id="location">Unable to Fetch Weather</div>
@@ -33,19 +39,15 @@
                 </div>
             </div>
             
-                <div class="city-box">
-                    <h2 class="city-box-header">Input city 5 day forecast</h2>
-                    <input class="city-search" type="text" placeholder="Enter any city..." id="city-forecast-input">
-                    <input class= "city-submit" type="submit" value="Submit" id="forecast-add">
-                </div> 
+                
 
                 <div class="city-display" id="forecast-display">
                    <h2 class ="city-text city-bold" id="forecast-city-output"></h2>
+                    
                 </div>
 
         </div>
         <script src="script.js"></script>
-    </div>
 </body>
 
 </html>

@@ -13,6 +13,7 @@ body {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    align-items: center;
 }
 
 .container {
@@ -63,16 +64,10 @@ body {
 
 .city-box {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 12vh;
+  height: 5vh;
   width: 25%;
-  margin: 10px;
-  border-radius: 5px;
-  background: #fcfcfc;
-  align-self: flex-end;
-  justify-self: center;
   box-shadow: 2px 2px 6px 1px rgb(0 0 0 / 15%), -2px -2px 6px 1px rgb(0 0 0 / 15%);
     border-radius: 20px;
     background: #fcfcfc;
@@ -88,7 +83,7 @@ body {
   border-radius: 5px;
   margin: 10px;
   background: #fcfcfc;
-  grid-row: 2 / 5;
+  grid-row: 1 / 5;
   box-shadow: 2px 2px 6px 1px rgb(0 0 0 / 15%), -2px -2px 6px 1px rgb(0 0 0 / 15%);
     border-radius: 20px;
     background: #fcfcfc;
@@ -115,8 +110,22 @@ body {
   font-size: 1rem;
 }
 
+.dash {
+  display: flex;
+  justify-self: center;
+  align-self: center;
+}
+
 #forecast-display .forecast-temp {
   padding-top: 15px;
+}
+
+.title-div {
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
 }
 
 @media (max-width: 400px) {
