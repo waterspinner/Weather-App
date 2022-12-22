@@ -14,6 +14,8 @@ body {
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
 .container-grid {
@@ -21,7 +23,7 @@ body {
     display: grid;
     grid-template-columns: 2fr 7fr;
     grid-template-rows: 1fr 6fr;
-    height: 90vh;
+    height: 70vh;
 }
 
 .current-display {
@@ -67,10 +69,12 @@ body {
   align-items: center;
   justify-content: center;
   height: 5vh;
-  width: 25%;
+  width: 50%;
+  max-width: 470px;
   box-shadow: 2px 2px 6px 1px rgb(0 0 0 / 15%), -2px -2px 6px 1px rgb(0 0 0 / 15%);
     border-radius: 20px;
     background: #fcfcfc;
+  margin-right: 12px;
 }
 
 .city-search { 
@@ -134,4 +138,13 @@ body {
     text-align: center;
     background: rgba(149, 205, 236, 0.22);
     margin: 10px;
+}
+
+#current-weather {
+  height: 20vh;
+}
+
+#city-details {
+  display: flex;
+  flex-direction: row;
 }

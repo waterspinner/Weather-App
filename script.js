@@ -64,8 +64,8 @@ function convertWindSpeed(val){
     return val * 2.23694;
 }
 
-function conversion(val){
-    return (val - 273) * 9/5 + 32;
+function tempConversionF(val){
+    return ((val - 273) * 9/5 + 32).toFixed(2);
 }
 
 //convert wind direction to cardinal direction
@@ -98,42 +98,17 @@ function convertDirection(val) {
 };
 
 
-//convert city name to lat and long coordinates.
-function convertCity(input) {
-    const base = 'http://api.openweathermap.org/geo/1.0/direct?q='+input+'&appid='+api;
-    //get json response
-    fetch(base).then((response) => {
-        return response.json();
-    }) 
-    // assign fetch 
-    .then((fetchResponse)=>{
-        console.log(fetchResponse);
-        cityLat = fetchResponse[0].lat,
-        cityLong = fetchResponse[0].lon;
-        console.log(cityLat);
-        console.log(cityLong);
-})
-};
-
-//one call json function
-function oneCall(lat, lon) {
-    const base = 'https://api.openweathermap.org/data/3.0/onecall?lat='+lat+'&lon='+lon+'&appid='+api;
-    //get json response
-    fetch(base).then((response) => {
-        return response.json();
-    }) 
-    // assign fetch 
-    .then((fetchResponse)=>{
-        console.log(fetchResponse);
-})
-}
-
 //variables for forecast
  var forecastAddBtn = document.querySelector('#forecast-add');
  var forecastInput = document.querySelector('#city-forecast-input');
  var forecastTemp = document.querySelector('#forecast-temp');
  var forecastCity = document.querySelector('#forecast-city-output');
  var forecastDescription = document.querySelector('#weather-description');
+ var currentCityTemp = document.querySelector('.current-temp');
+ var currentCityName = document.querySelector('.current-city-name');
+ var currentCityTime = document.querySelector('.current-city-time')
+ var forecastSunrise = document.querySelector('.current-sunrise');
+ var forecastSunset = document.querySelector('.current-sunset');
 
  //event listener for forecast submit
  forecastAddBtn.addEventListener('click', () => {
@@ -145,17 +120,47 @@ function oneCall(lat, lon) {
      // assign fetch lat & long for One Call API
     .then((data)=>{
         console.log(data);
+        //variables from geo API
         const cityLat = data[0].lat;
         const cityLong = data[0].lon;
-    
+        const cityName = data[0].name;
+        
+
         //One call API base decleration
-        const oneCallBase = 'https://api.openweathermap.org/data/3.0/onecall?lat='+cityLat+'&lon='+cityLong+'&appid='+api;
+        const oneCallBase = 'https://api.openweathermap.org/data/3.0/onecall?lat='+cityLat+'&lon='+cityLong+'&exclude=minutely,hourly&appid='+api;
         console.log(oneCallBase)
         fetch(oneCallBase).then((response) => response.json()) 
         // assign fetch 
         .then((data)=>{
             console.log(data);
-            //
+            //variables from oneCall API data
+            const currentTemp = data.current.temp;
+            const currentSunrise = data.current.sunrise;
+            const currentSunset = data.current.sunset;
+            const cityTime = data.current.dt;
+
+            const sunriseGMT = new Date(currentSunrise * 1000);
+            const sunsetGMT = new Date(currentSunset * 1000);
+            const currentTimeGMT = new Date(cityTime * 1000);
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+            const actualDate = currentTimeGMT.toLocaleDateString(undefined, options);
+            const actualTime = currentTimeGMT.toLocaleString(undefined, {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true,
+            });
+
+            console.log(sunriseGMT);
+            console.log(sunsetGMT);
+
+            currentCityName.textContent = `${cityName}`;
+            currentCityTime.textContent = `${actualDate} at ${actualTime}`;
+            currentCityTemp.textContent = `Temp: ${tempConversionF(currentTemp)}`;
+            forecastSunrise.textContent = `${sunriseGMT}`;
+            forecastSunset.textContent = `${sunsetGMT}`;
+
+
         })
     })
 })
