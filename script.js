@@ -134,37 +134,30 @@ function oneCall(lat, lon) {
  var forecastTemp = document.querySelector('#forecast-temp');
  var forecastCity = document.querySelector('#forecast-city-output');
  var forecastDescription = document.querySelector('#weather-description');
- var cityLong = "";
- var cityLat = "";
 
  //event listener for forecast submit
  forecastAddBtn.addEventListener('click', () => {
     const base = 'http://api.openweathermap.org/geo/1.0/direct?q='+forecastInput.value+'&appid='+api;
-    const oneCallBase = 'https://api.openweathermap.org/data/3.0/onecall?lat='+cityLat+'&lon='+cityLong+'&appid='+api;
+   
 
     //get json response
-    fetch(base).then((response) => {
-        return response.json();
-    }) 
-    // assign fetch 
-    .then((fetchResponse)=>{
-        console.log(fetchResponse);
-        cityLat = fetchResponse[0].lat,
-        cityLong = fetchResponse[0].lon;
-        console.log(cityLat);
-        console.log(cityLong);
+    fetch(base).then((response) => response.json()) 
+     // assign fetch lat & long for One Call API
+    .then((data)=>{
+        console.log(data);
+        const cityLat = data[0].lat;
+        const cityLong = data[0].lon;
     
-    console.log('https://api.openweathermap.org/data/3.0/onecall?lat='+cityLat+'&lon='+cityLong+'&appid='+api)
-    fetch(oneCallBase).then((response) => {
-        return response.json();
-    }) 
-    // assign fetch 
-    .then((fetchResponse)=>{
-        console.log(fetchResponse);
-})
+        //One call API base decleration
+        const oneCallBase = 'https://api.openweathermap.org/data/3.0/onecall?lat='+cityLat+'&lon='+cityLong+'&appid='+api;
+        console.log(oneCallBase)
+        fetch(oneCallBase).then((response) => response.json()) 
+        // assign fetch 
+        .then((data)=>{
+            console.log(data);
+            //
+        })
     })
 })
-    //need to change to One call!!!!!!!!!!!!!!!!!!!!!!
-    //add function to convert city name to lat + long coordinates
-    // const base = 'https://api.openweathermap.org/data/2.5/forecast?q='+forecastInput.value+'&appid='+api;
+
     
