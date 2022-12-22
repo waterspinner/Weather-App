@@ -21,7 +21,7 @@
             <input class= "city-submit" type="submit" value="Submit" id="forecast-add">
         </div>
     </div> 
-        <div class="container">
+        <div class="container-grid">
             <div class="current-display">
                 <img src="" srcset="" id="weather-icon">
                 <div id="location">Unable to Fetch Weather</div>
@@ -39,12 +39,20 @@
                 </div>
             </div>
             
-                
-
-                <div class="city-display" id="forecast-display">
-                   <h2 class ="city-text city-bold" id="forecast-city-output"></h2>
-                    
+            <div class="city-display" id="forecast-display">
+               <h2 class ="city-text city-bold" id="forecast-city-output"></h2>
+               <div class="modal" id="city-details"></div>
+               <div class="modal" id="current-weather"></div>
+               <div class="modal" id="solar-details"></div>
+                <div class="days">
+                    <div class="modal" id="day-1"></div>
+                    <div class="modal" id="day-2"></div>
+                    <div class="modal" id="day-3"></div>
+                    <div class="modal" id="day-4"></div>
+                    <div class="modal" id="day-5"></div>
                 </div>
+                    
+            </div>
 
         </div>
         <script src="script.js"></script>

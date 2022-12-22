@@ -59,61 +59,13 @@ window.addEventListener('load', () => {
 });
 
 
-
-//search bar function 
-
-
-
-//determing the constant of one of the id functions
-var inputVal = document.querySelector('#city-input');
-var btn = document.querySelector('#current-add');
-var city = document.querySelector('#city-output');
-var descrip = document.querySelector('#description');
-var tempMain = document.querySelector('#temp');
-var sunriseSearch = document.querySelector('#sunrise-search');
-var sunsetSearch = document.querySelector('#sunset-search');
-
-//api returns temp in Kelvin, function to convert
-function conversion(val){
-    return (val - 273) * 9/5 + 32;
-}
-
-//collect info with fetch
-btn.addEventListener('click', () => {
-    const base = 'https://api.openweathermap.org/data/2.5/weather?q='+inputVal.value+'&appid='+api;
-
-    fetch(base).then((response) => {
-        return response.json();
-    })
-
-    .then(data => {
-        //collect info from fetch
-        var nameVal = data.name;
-        var {description} = data.weather[0];
-        var {temp} = data.main;
-        var { sunrise, sunset } = data.sys;
-        const sunriseGMT = new Date(sunrise * 1000);
-        const sunsetGMT = new Date(sunset * 1000);
-
-        city.innerHTML = `Weather of <span>${nameVal}</span>`;
-        tempMain.innerHTML = `Temperature: <span>${conversion(temp).toFixed(2)}</span> F`;
-        descrip.innerHTML = `Sky Conditions: <span>${description}</span>`;
-        sunriseSearch.innerHTML = `Sunrise: <span>${sunriseGMT}</span>`;
-        sunsetSearch.innerHTML = `Sunset: <span>${sunsetGMT}</span>`;
-
-        console.log(data);
-        
-        
-    })
-})
-
-console.log(temp);
-
-//5 day forecast 3hr Int.
-
-//convert from m/s to mph
+//conversion functions
 function convertWindSpeed(val){
     return val * 2.23694;
+}
+
+function conversion(val){
+    return (val - 273) * 9/5 + 32;
 }
 
 //convert wind direction to cardinal direction
@@ -144,16 +96,11 @@ function convertDirection(val) {
         return direction = "North West";
     }    
 };
-//variables for forecast
- var forecastAddBtn = document.querySelector('#forecast-add');
- var forecastInput = document.querySelector('#city-forecast-input');
- var forecastTemp = document.querySelector('#forecast-temp');
- var forecastCity = document.querySelector('#forecast-city-output');
- var forecastDescription = document.querySelector('#weather-description');
 
- //event listener for forecast submit
- forecastAddBtn.addEventListener('click', () => {
-    const base = 'https://api.openweathermap.org/data/2.5/forecast?q='+forecastInput.value+'&appid='+api;
+
+//convert city name to lat and long coordinates.
+function convertCity(input) {
+    const base = 'http://api.openweathermap.org/geo/1.0/direct?q='+input+'&appid='+api;
     //get json response
     fetch(base).then((response) => {
         return response.json();
@@ -161,50 +108,63 @@ function convertDirection(val) {
     // assign fetch 
     .then((fetchResponse)=>{
         console.log(fetchResponse);
-        let forecastCityString = `5 Day forecast for <span>${fetchResponse.city.name}`;
-        forecastCity.innerHTML = forecastCityString;
-        console.log(fetchResponse.list[0].weather[0].description);
-        //iteration through array
-        for( threeHourInt of fetchResponse.list) {
-            //assining data to variables
-            var {temp} = threeHourInt.main;
-            var {description} = threeHourInt.weather[0];
-            var {speed} = threeHourInt.wind;
-            var {deg} = threeHourInt.wind;
+        cityLat = fetchResponse[0].lat,
+        cityLong = fetchResponse[0].lon;
+        console.log(cityLat);
+        console.log(cityLong);
+})
+};
 
-            //create new element for temp and time
-                const newTemp = document.createElement("p");
+//one call json function
+function oneCall(lat, lon) {
+    const base = 'https://api.openweathermap.org/data/3.0/onecall?lat='+lat+'&lon='+lon+'&appid='+api;
+    //get json response
+    fetch(base).then((response) => {
+        return response.json();
+    }) 
+    // assign fetch 
+    .then((fetchResponse)=>{
+        console.log(fetchResponse);
+})
+}
 
-            //assing ID value of new element
-                newTemp.setAttribute("class", "forecast-temp");
+//variables for forecast
+ var forecastAddBtn = document.querySelector('#forecast-add');
+ var forecastInput = document.querySelector('#city-forecast-input');
+ var forecastTemp = document.querySelector('#forecast-temp');
+ var forecastCity = document.querySelector('#forecast-city-output');
+ var forecastDescription = document.querySelector('#weather-description');
+ var cityLong = "";
+ var cityLat = "";
 
-            //create string and append to created element
-                const tempString = document.createTextNode(`Temp at ${threeHourInt.dt_txt} is ${conversion(temp).toFixed(2)} *F`);
-                newTemp.appendChild(tempString);
-                console.log(newTemp.classList);
+ //event listener for forecast submit
+ forecastAddBtn.addEventListener('click', () => {
+    const base = 'http://api.openweathermap.org/geo/1.0/direct?q='+forecastInput.value+'&appid='+api;
+    const oneCallBase = 'https://api.openweathermap.org/data/3.0/onecall?lat='+cityLat+'&lon='+cityLong+'&appid='+api;
 
-            //repeat process for weather description
-                const newDescription = document.createElement("p");
-                const descriptionString = document.createTextNode(`Weather: ${description}`)
-                newDescription.appendChild(descriptionString);
-
-            //repeat process for Wind speed
-                const windSpeed = document.createElement("p");
-                const windString = document.createTextNode(`Wind speed is ${convertWindSpeed(speed).toFixed(1)}mph`)
-                windSpeed.appendChild(windString);
-
-            //repeat process for wind direction
-                const windDirection = document.createElement("p");
-                const directionString = document.createTextNode(`Wind Direction: ${convertDirection(deg)}`);
-                windDirection.appendChild(directionString);
-
-            //append newly created elements to existing element in document
-                const currentP = document.getElementById("forecast-display");
-                currentP.appendChild(newTemp);
-                currentP.appendChild(newDescription);
-                currentP.appendChild(windSpeed);
-                currentP.appendChild(windDirection);
-
-        }
+    //get json response
+    fetch(base).then((response) => {
+        return response.json();
+    }) 
+    // assign fetch 
+    .then((fetchResponse)=>{
+        console.log(fetchResponse);
+        cityLat = fetchResponse[0].lat,
+        cityLong = fetchResponse[0].lon;
+        console.log(cityLat);
+        console.log(cityLong);
+    
+    console.log('https://api.openweathermap.org/data/3.0/onecall?lat='+cityLat+'&lon='+cityLong+'&appid='+api)
+    fetch(oneCallBase).then((response) => {
+        return response.json();
+    }) 
+    // assign fetch 
+    .then((fetchResponse)=>{
+        console.log(fetchResponse);
+})
     })
-});
+})
+    //need to change to One call!!!!!!!!!!!!!!!!!!!!!!
+    //add function to convert city name to lat + long coordinates
+    // const base = 'https://api.openweathermap.org/data/2.5/forecast?q='+forecastInput.value+'&appid='+api;
+    

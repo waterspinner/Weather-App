@@ -16,7 +16,7 @@ body {
     align-items: center;
 }
 
-.container {
+.container-grid {
     width: 90%;
     display: grid;
     grid-template-columns: 2fr 7fr;
@@ -93,15 +93,6 @@ body {
   padding: 2px;
 }
 
-.city-bold {
-  padding: 5px 0;
-  text-align: center;
-  background: #0548b5;
-  color: white;
-  width: 100%;
-  height: 40px;
-  border-radius: 20px 20px 0px 0px;
-}
 .city-bold span {
   color: red;
 }
@@ -128,22 +119,19 @@ body {
   justify-content: space-between;
 }
 
-@media (max-width: 400px) {
-  .city-box{
-    width: 80%;
-  }
-  .city-display {
-    height: 30vh;
-    width: 80%;
-  }
+.days {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
 }
 
-@media (max-width: 900px) {
-  .city-box{
-    width: 80%;
-  }
-  .city-display {
-    height: 30vh;
-    width: 80%;
-  }
+.modal {
+  height: 50px;
+  width: 50px;
+  display: block;
+  border-radius: 10px;
+    text-align: center;
+    background: rgba(149, 205, 236, 0.22);
+    margin: 10px;
 }
