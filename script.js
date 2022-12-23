@@ -61,7 +61,7 @@ window.addEventListener('load', () => {
 
 //conversion functions
 function convertWindSpeed(val){
-    return val * 2.23694;
+    return (val * 2.23694).toFixed(2);
 }
 
 function tempConversionF(val){
@@ -98,17 +98,22 @@ function convertDirection(val) {
 };
 
 
+
+
 //variables for forecast
  var forecastAddBtn = document.querySelector('#forecast-add');
  var forecastInput = document.querySelector('#city-forecast-input');
  var forecastTemp = document.querySelector('#forecast-temp');
  var forecastCity = document.querySelector('#forecast-city-output');
- var forecastDescription = document.querySelector('#weather-description');
+ var forecastDescription = document.querySelector('.weather-description');
  var currentCityTemp = document.querySelector('.current-temp');
  var currentCityName = document.querySelector('.current-city-name');
  var currentCityTime = document.querySelector('.current-city-time')
  var forecastSunrise = document.querySelector('.current-sunrise');
  var forecastSunset = document.querySelector('.current-sunset');
+ var forecastWindSpeed = document.querySelector('.windspeed');
+ var forecastWindDir = document.querySelector('.wind-direction');
+ var forecastHumidity = document.querySelector('.humidity');
 
  //event listener for forecast submit
  forecastAddBtn.addEventListener('click', () => {
@@ -132,30 +137,46 @@ function convertDirection(val) {
         fetch(oneCallBase).then((response) => response.json()) 
         // assign fetch 
         .then((data)=>{
+//Get local date object for searched cities
+function localDate(unix) {
+    const date = new Date();
+    const timestamp = unix;
+    const offset = date.getTimezoneOffset() * 60000;
+    const utc = timestamp + offset;
+    const updatedDate = new Date(utc + 1000 * data.timezone);
+    return updatedDate;
+}
+
             console.log(data);
             //variables from oneCall API data
-            const currentTemp = data.current.temp;
-            const currentSunrise = data.current.sunrise;
-            const currentSunset = data.current.sunset;
             const cityTime = data.current.dt;
+            const {humidity, wind_speed, wind_deg, sunrise, sunset, temp} = data.current;
+            const {description} = data.current.weather[0];
+            const {timezone} = data;
 
-            const sunriseGMT = new Date(currentSunrise * 1000);
-            const sunsetGMT = new Date(currentSunset * 1000);
+            const sunriseGMT = new Date(sunrise * 1000);
+            const sunsetGMT = new Date(sunset * 1000);
             const currentTimeGMT = new Date(cityTime * 1000);
             const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: true };
 
             const actualDate = currentTimeGMT.toLocaleDateString(undefined, dateOptions);
             const actualTime = currentTimeGMT.toLocaleString(undefined, timeOptions);
+            const actualSunrise = sunriseGMT.toTimeString(timezone, timeOptions)
+            const actualSunset = sunsetGMT.toTimeString(timezone, timeOptions);
+//need to use timezone offset I think to display the sunset and
+//sunrise time in the searched cities timezone.
 
-            console.log(sunriseGMT);
-            console.log(sunsetGMT);
 
             currentCityName.textContent = `${cityName}`;
             currentCityTime.textContent = `${actualDate} at ${actualTime}`;
-            currentCityTemp.textContent = `Temp: ${tempConversionF(currentTemp)}`;
-            forecastSunrise.textContent = `${sunriseGMT}`;
-            forecastSunset.textContent = `${sunsetGMT}`;
+            currentCityTemp.textContent = `Temp: ${tempConversionF(temp)}`;
+            forecastSunrise.textContent = `Sunrise: ${actualSunrise}`;
+            forecastSunset.textContent = `Sunset: ${actualSunset}`;
+            forecastWindSpeed.textContent = `Wind Speed: ${convertWindSpeed(wind_speed)} MPH`;
+            forecastWindDir.textContent = `Wind Direction: ${convertDirection(wind_deg)}`;
+            forecastDescription.textContent = `${description}`;
+            forecastHumidity.textContent = `${humidity}%`;
 
 
         })
