@@ -142,14 +142,11 @@ function convertDirection(val) {
             const sunriseGMT = new Date(currentSunrise * 1000);
             const sunsetGMT = new Date(currentSunset * 1000);
             const currentTimeGMT = new Date(cityTime * 1000);
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: true };
 
-            const actualDate = currentTimeGMT.toLocaleDateString(undefined, options);
-            const actualTime = currentTimeGMT.toLocaleString(undefined, {
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: true,
-            });
+            const actualDate = currentTimeGMT.toLocaleDateString(undefined, dateOptions);
+            const actualTime = currentTimeGMT.toLocaleString(undefined, timeOptions);
 
             console.log(sunriseGMT);
             console.log(sunsetGMT);
