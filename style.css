@@ -139,10 +139,10 @@ body {
 }
 
 #current-weather {
-  height: 20vh;
+ 
 }
 
 #city-details {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }

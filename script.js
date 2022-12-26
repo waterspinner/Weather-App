@@ -97,7 +97,21 @@ function convertDirection(val) {
     }    
 };
 
+//get day name 
+function getDayName(unix) {
+    //create new date object, pass in unix time
+    const date = new Date(unix * 1000);
 
+// Use the getDay() method to get the day of the week as a number (0-6)
+const dayOfWeek = date.getDay();
+
+    // Create an array of day names
+const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+// Use the day of the week number to get the corresponding day name from the array
+return dayNames[dayOfWeek];
+
+}
 
 
 //variables for forecast
@@ -114,6 +128,7 @@ function convertDirection(val) {
  var forecastWindSpeed = document.querySelector('.windspeed');
  var forecastWindDir = document.querySelector('.wind-direction');
  var forecastHumidity = document.querySelector('.humidity');
+ var day1Descrtiption = document.querySelector('.day-1-description')
 
  //event listener for forecast submit
  forecastAddBtn.addEventListener('click', () => {
@@ -149,6 +164,8 @@ function localDate(unix) {
 
             console.log(data);
             //variables from oneCall API data
+
+            //getting search city current info
             const cityTime = data.current.dt;
             const {humidity, wind_speed, wind_deg, sunrise, sunset, temp} = data.current;
             const {description} = data.current.weather[0];
@@ -164,21 +181,42 @@ function localDate(unix) {
             const actualTime = currentTimeGMT.toLocaleString(undefined, timeOptions);
             const actualSunrise = sunriseGMT.toTimeString(timezone, timeOptions)
             const actualSunset = sunsetGMT.toTimeString(timezone, timeOptions);
+
+            //getting search city forecast info
+
+
 //need to use timezone offset I think to display the sunset and
 //sunrise time in the searched cities timezone.
 
-
-            currentCityName.textContent = `${cityName}`;
+            //display current info
+            currentCityName.textContent = `${cityName} `;
             currentCityTime.textContent = `${actualDate} at ${actualTime}`;
             currentCityTemp.textContent = `Temp: ${tempConversionF(temp)}`;
             forecastSunrise.textContent = `Sunrise: ${actualSunrise}`;
             forecastSunset.textContent = `Sunset: ${actualSunset}`;
             forecastWindSpeed.textContent = `Wind Speed: ${convertWindSpeed(wind_speed)} MPH`;
             forecastWindDir.textContent = `Wind Direction: ${convertDirection(wind_deg)}`;
-            forecastDescription.textContent = `${description}`;
-            forecastHumidity.textContent = `${humidity}%`;
+            forecastDescription.textContent = `Weather Description: ${description}`;
+            forecastHumidity.textContent = `Humidity: ${humidity}%`;
 
+            //display 5 day forecast info
+            document.querySelector('.day-1-description').textContent = getDayName(data.daily[1].dt);
+            document.querySelector('.day-2-description').textContent = getDayName(data.daily[2].dt);
+            document.querySelector('.day-3-description').textContent = getDayName(data.daily[3].dt);
+            document.querySelector('.day-4-description').textContent = getDayName(data.daily[4].dt);
+            document.querySelector('.day-5-description').textContent = getDayName(data.daily[5].dt);
 
+            document.querySelector('.day-1-max-temp').textContent = `Max: ${tempConversionF(data.daily[1].temp.max)}`;
+            document.querySelector('.day-2-max-temp').textContent = `Max: ${tempConversionF(data.daily[2].temp.max)}`;
+            document.querySelector('.day-3-max-temp').textContent = `Max: ${tempConversionF(data.daily[3].temp.max)}`;
+            document.querySelector('.day-4-max-temp').textContent = `Max: ${tempConversionF(data.daily[4].temp.max)}`;
+            document.querySelector('.day-5-max-temp').textContent = `Max: ${tempConversionF(data.daily[5].temp.max)}`;
+
+            document.querySelector('.day-1-min-temp').textContent = `Min: ${tempConversionF(data.daily[1].temp.min)}`;
+            document.querySelector('.day-2-min-temp').textContent = `Min: ${tempConversionF(data.daily[2].temp.min)}`;
+            document.querySelector('.day-3-min-temp').textContent = `Min: ${tempConversionF(data.daily[3].temp.min)}`;
+            document.querySelector('.day-4-min-temp').textContent = `Min: ${tempConversionF(data.daily[4].temp.min)}`;
+            document.querySelector('.day-5-min-temp').textContent = `Min: ${tempConversionF(data.daily[5].temp.min)}`;
         })
     })
 })
