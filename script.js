@@ -43,12 +43,12 @@ window.addEventListener('load', () => {
                 iconImg.src = iconURL;
                 loc.textContent = `${place}`;
                 desc.textContent = `${description}`;
-                tempC.textContent = `${temp.toFixed(2)} *C`;
-                tempF.textContent = `${fahrenheit.toFixed(2)} *F`;
+                tempC.textContent = `${temp.toFixed(2)}°C`;
+                tempF.textContent = `${fahrenheit.toFixed(2)}°F`;
                 sunriseDOM.textContent = `${sunriseGMT}`;
                 sunsetDOM.textContent = `${sunsetGMT}`;
-                currentWindSpeed.textContent =`${speed}`;
-                currentWindDir.textContent = `${deg}`;
+                currentWindSpeed.textContent =`${speed} MPH`;
+                currentWindDir.textContent = `${convertDirection(deg)}`;
 
 
 
@@ -121,8 +121,8 @@ return dayNames[dayOfWeek];
  var forecastCity = document.querySelector('#forecast-city-output');
  var forecastDescription = document.querySelector('.weather-description');
  var currentCityTemp = document.querySelector('.current-temp');
- var currentCityName = document.querySelector('.current-city-name');
- var currentCityTime = document.querySelector('.current-city-time')
+ var currentCityName = document.querySelector('#bold-city');
+ var currentCityTime = document.querySelector('#time')
  var forecastSunrise = document.querySelector('.current-sunrise');
  var forecastSunset = document.querySelector('.current-sunset');
  var forecastWindSpeed = document.querySelector('.windspeed');
@@ -152,6 +152,7 @@ return dayNames[dayOfWeek];
         fetch(oneCallBase).then((response) => response.json()) 
         // assign fetch 
         .then((data)=>{
+
 //Get local date object for searched cities
 function localDate(unix) {
     const date = new Date();
@@ -164,6 +165,7 @@ function localDate(unix) {
 
             console.log(data);
             //variables from oneCall API data
+           // const iconURL = 'https://openweathermap.org/img/wn/'+icon+'@2x.png';
 
             //getting search city current info
             const cityTime = data.current.dt;
@@ -189,9 +191,9 @@ function localDate(unix) {
 //sunrise time in the searched cities timezone.
 
             //display current info
-            currentCityName.textContent = `${cityName} `;
+            currentCityName.textContent = `${cityName}`;
             currentCityTime.textContent = `${actualDate} at ${actualTime}`;
-            currentCityTemp.textContent = `Temp: ${tempConversionF(temp)}`;
+            currentCityTemp.textContent = `Temp: ${tempConversionF(temp)}°F`;
             forecastSunrise.textContent = `Sunrise: ${actualSunrise}`;
             forecastSunset.textContent = `Sunset: ${actualSunset}`;
             forecastWindSpeed.textContent = `Wind Speed: ${convertWindSpeed(wind_speed)} MPH`;
@@ -200,23 +202,21 @@ function localDate(unix) {
             forecastHumidity.textContent = `Humidity: ${humidity}%`;
 
             //display 5 day forecast info
-            document.querySelector('.day-1-description').textContent = getDayName(data.daily[1].dt);
-            document.querySelector('.day-2-description').textContent = getDayName(data.daily[2].dt);
-            document.querySelector('.day-3-description').textContent = getDayName(data.daily[3].dt);
-            document.querySelector('.day-4-description').textContent = getDayName(data.daily[4].dt);
-            document.querySelector('.day-5-description').textContent = getDayName(data.daily[5].dt);
-
-            document.querySelector('.day-1-max-temp').textContent = `Max: ${tempConversionF(data.daily[1].temp.max)}`;
-            document.querySelector('.day-2-max-temp').textContent = `Max: ${tempConversionF(data.daily[2].temp.max)}`;
-            document.querySelector('.day-3-max-temp').textContent = `Max: ${tempConversionF(data.daily[3].temp.max)}`;
-            document.querySelector('.day-4-max-temp').textContent = `Max: ${tempConversionF(data.daily[4].temp.max)}`;
-            document.querySelector('.day-5-max-temp').textContent = `Max: ${tempConversionF(data.daily[5].temp.max)}`;
-
-            document.querySelector('.day-1-min-temp').textContent = `Min: ${tempConversionF(data.daily[1].temp.min)}`;
-            document.querySelector('.day-2-min-temp').textContent = `Min: ${tempConversionF(data.daily[2].temp.min)}`;
-            document.querySelector('.day-3-min-temp').textContent = `Min: ${tempConversionF(data.daily[3].temp.min)}`;
-            document.querySelector('.day-4-min-temp').textContent = `Min: ${tempConversionF(data.daily[4].temp.min)}`;
-            document.querySelector('.day-5-min-temp').textContent = `Min: ${tempConversionF(data.daily[5].temp.min)}`;
+            document.querySelector('#day-1-description').textContent = getDayName(data.daily[1].dt);
+            document.querySelector('#day-2-description').textContent = getDayName(data.daily[2].dt);
+            document.querySelector('#day-3-description').textContent = getDayName(data.daily[3].dt);
+            document.querySelector('#day-4-description').textContent = getDayName(data.daily[4].dt);
+            document.querySelector('#day-5-description').textContent = getDayName(data.daily[5].dt);
+            document.querySelector('#day-1-max-temp').textContent = `High ${tempConversionF(data.daily[1].temp.max)}`;
+            document.querySelector('#day-2-max-temp').textContent = `High ${tempConversionF(data.daily[2].temp.max)}`;
+            document.querySelector('#day-3-max-temp').textContent = `High ${tempConversionF(data.daily[3].temp.max)}`;
+            document.querySelector('#day-4-max-temp').textContent = `High ${tempConversionF(data.daily[4].temp.max)}`;
+            document.querySelector('#day-5-max-temp').textContent = `High ${tempConversionF(data.daily[5].temp.max)}`;
+            document.querySelector('#day-1-min-temp').textContent = `Low ${tempConversionF(data.daily[1].temp.min)}`;
+            document.querySelector('#day-2-min-temp').textContent = `Low ${tempConversionF(data.daily[2].temp.min)}`;
+            document.querySelector('#day-3-min-temp').textContent = `Low ${tempConversionF(data.daily[3].temp.min)}`;
+            document.querySelector('#day-4-min-temp').textContent = `Low ${tempConversionF(data.daily[4].temp.min)}`;
+            document.querySelector('#day-5-min-temp').textContent = `Low ${tempConversionF(data.daily[5].temp.min)}`;
         })
     })
 })
