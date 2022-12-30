@@ -126,7 +126,7 @@ function getIcon(icon) {
 //local date to Timezone
 function localDate(unix, object) {
     const date = new Date(unix);
-    const offset = object.timezone_offset / 3600;
+    const offset = object.timezone_offset;
     const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: true };
     // Apply the timezone offset to the date object.
     date.setHours(date.getHours() + offset);
