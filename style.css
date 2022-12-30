@@ -31,7 +31,7 @@ h3 {
 }
 
 .container-grid {
-    width: 90%;
+    width: 85%;
     display: grid;
     grid-template-columns: 2fr 7fr;
     grid-template-rows: 1fr 6fr;
@@ -41,7 +41,7 @@ h3 {
 .current-display {
   box-shadow: 2px 2px 6px 1px rgb(0 0 0 / 15%), -2px -2px 6px 1px rgb(0 0 0 / 15%);
     border-radius: 20px;
-    background: #fcfcfc;
+    background: #4e76b3;
     display: flex;
   flex-direction: column;
   align-items: center;
@@ -82,21 +82,30 @@ h3 {
   align-items: center;
   justify-content: center;
   height: 5vh;
-  width: 50%;
+  width: max-content;
   max-width: 470px;
   box-shadow: var(--background-shadow);
     border-radius: 20px;
     background: #fcfcfc;
-  margin-right: 12px;
+  margin: 12px;
+}
+
+.city-box-header {
+  margin-left: 5px;
 }
 
 .city-search { 
   margin: 7px;
 }
 
+.city-submit {
+  margin-right: 5px;
+}
+
 .city-display {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   border-radius: 5px;
   margin: 10px;
   background: #fcfcfc;
@@ -104,6 +113,12 @@ h3 {
   box-shadow: var(--background-shadow);
     border-radius: 20px;
     background: #fcfcfc;
+}
+
+.city-details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .city-text {
@@ -124,6 +139,20 @@ h3 {
   align-self: center;
 }
 
+.day {
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+    text-align: center;
+    background: #4e76b3;
+    margin: 10px;
+  box-shadow: var(--background-shadow);
+  width: max-content;
+}
+
 #forecast-display .forecast-temp {
   padding-top: 15px;
 }
@@ -132,8 +161,8 @@ h3 {
   width: 90%;
   display: flex;
   flex-direction: row;
-  align-items: stretch;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
 }
 
 .days {
@@ -144,7 +173,6 @@ h3 {
 }
 
 .modal {
-  display: block;
   border-radius: 10px;
     text-align: center;
     background: rgba(149, 205, 236, 0.22);
@@ -154,14 +182,37 @@ h3 {
 }
 
 #current-weather {
- 
+  background: #99a2a9;
 }
 
 #city-details {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 #bold-city {
   font-weight: bold;
+}
+
+.weather-data {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.day-details {
+  margin: 5px;
+}
+
+#data {
+  margin: 5px;
+}
+
+#name {
+  margin: 5px;
+}
+
+#time {
+  margin: 5px;
 }
