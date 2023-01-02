@@ -159,7 +159,7 @@ function localDate(unix, object) {
 
  //event listener for forecast submit
  forecastAddBtn.addEventListener('click', () => {
-    const base = 'http://api.openweathermap.org/geo/1.0/direct?q='+forecastInput.value+'&appid='+api;
+    const base = 'https://api.openweathermap.org/geo/1.0/direct?q='+forecastInput.value+'&appid='+api;
    
 
     //get json response
