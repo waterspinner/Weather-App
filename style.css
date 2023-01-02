@@ -104,6 +104,7 @@ h3 {
 
 .city-display {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   justify-content: space-between;
   border-radius: 5px;
@@ -192,6 +193,10 @@ h3 {
 }
 
 #bold-city {
+  font-weight: bold;
+}
+
+.day-name {
   font-weight: bold;
 }
 

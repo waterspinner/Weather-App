@@ -125,12 +125,20 @@ function getIcon(icon) {
 
 //local date to Timezone
 function localDate(unix, object) {
+    //assign unix time a date
     const date = new Date(unix);
-    const offset = object.timezone_offset;
+    //assign the UTC offset in hours
+    const localOffset = object.timezone_offset / 3600;
+    //to get the desired offset, we will take the geo-local offset
+    //and add the searched cities local offset
+    const desiredOffset = (date.getTimezoneOffset() / 60) + localOffset;
+    //to get the desired date, add the desired offset in milliseconds
+    const desiredDate = new Date(date.getTime() + desiredOffset * 3600 * 1000);
+    //time options to display to local string.
     const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: true };
     // Apply the timezone offset to the date object.
-    date.setHours(date.getHours() + offset);
-    return date.toLocaleString(undefined, timeOptions);
+    //date.setHours(date.getHours() + offset);
+    return desiredDate.toLocaleString(undefined, timeOptions);
 }
 
 //variables for forecast
@@ -182,14 +190,13 @@ function localDate(unix, object) {
                         const cityTime = data.current.dt;
                         const {humidity, wind_speed, wind_deg, sunrise, sunset, temp} = data.current;
                         const {description, icon} = data.current.weather[0];
-                        const {timezone} = data;
 
-                        const sunriseGMT = new Date(sunrise * 1000);
-                        const sunsetGMT = new Date(sunset * 1000);
+
+console.log(cityTime);
+console.log(cityTime * 1000);
+
                         const currentTimeGMT = new Date(cityTime * 1000);
                         const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                        const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: true };
-
                         const actualDate = currentTimeGMT.toLocaleDateString(undefined, dateOptions);
                         const actualTime = localDate(cityTime * 1000, data);
                         const actualSunrise = localDate(sunrise * 1000, data);
