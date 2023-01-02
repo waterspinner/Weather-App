@@ -7,6 +7,8 @@ const tempF = document.querySelector('.f');
 const desc = document.querySelector('.desc');
 const sunriseDOM = document.querySelector('.sunrise');
 const sunsetDOM = document.querySelector('.sunset');
+const currentWindSpeed = document.querySelector('.current-windspeed');
+const currentWindDir = document.querySelector('.current-wind-direction');
 
 window.addEventListener('load', () => {
     let long;
@@ -22,13 +24,13 @@ window.addEventListener('load', () => {
             fetch(base).then((response) => {
                 return response.json();
             })
+            
             .then((data) => {
-                const {temp} = data.main
+                const {temp, humidity} = data.main
                 const place = data.name
                 const { description, icon } = data.weather[0];
                 const { sunrise, sunset } = data.sys;
-
-                const iconURL = 'https://openweathermap.org/img/wn/'+icon+'@2x.png';
+                const {deg, speed} = data.wind;
                 const fahrenheit = (temp * 9) / 5 + 32;
 
                 //converting epoch(Unix) time to GMT
@@ -36,79 +38,32 @@ window.addEventListener('load', () => {
                 const sunsetGMT = new Date(sunset * 1000);
 
                 //interacting with DOM to show data
-                iconImg.src = iconURL;
+                iconImg.src = getIcon(icon);
                 loc.textContent = `${place}`;
                 desc.textContent = `${description}`;
-                tempC.textContent = `${temp.toFixed(2)} *C`;
-                tempF.textContent = `${fahrenheit.toFixed(2)} *F`;
+                tempC.textContent = `${temp.toFixed(2)}°C`;
+                tempF.textContent = `${fahrenheit.toFixed(2)}°F`;
                 sunriseDOM.textContent = `${sunriseGMT}`;
                 sunsetDOM.textContent = `${sunsetGMT}`;
+                currentWindSpeed.textContent =`${speed} MPH`;
+                currentWindDir.textContent = `${convertDirection(deg)}`;
 
-                console.log(position);
+
+
+             console.log(data);
             });
         });
     }
 });
 
 
-console.log(GeolocationPosition);
-console.log(GeolocationCoordinates);
-
-
-//search bar function 
-
-
-
-//determing the constant of one of the id functions
-var inputVal = document.querySelector('#city-input');
-var btn = document.querySelector('#current-add');
-var city = document.querySelector('#city-output');
-var descrip = document.querySelector('#description');
-var tempMain = document.querySelector('#temp');
-var sunriseSearch = document.querySelector('#sunrise-search');
-var sunsetSearch = document.querySelector('#sunset-search');
-
-//api returns temp in Kelvin, function to convert
-function conversion(val){
-    return (val - 273) * 9/5 + 32;
+//conversion functions
+function convertWindSpeed(val){
+    return (val * 2.23694).toFixed(2);
 }
 
-//collect info with fetch
-btn.addEventListener('click', () => {
-    const base = 'https://api.openweathermap.org/data/2.5/weather?q='+inputVal.value+'&appid='+api;
-
-    fetch(base).then((response) => {
-        return response.json();
-    })
-
-    .then(data => {
-        //collect info from fetch
-        var nameVal = data.name;
-        var {description} = data.weather[0];
-        var {temp} = data.main;
-        var { sunrise, sunset } = data.sys;
-        const sunriseGMT = new Date(sunrise * 1000);
-        const sunsetGMT = new Date(sunset * 1000);
-
-        city.innerHTML = `Weather of <span>${nameVal}</span>`;
-        tempMain.innerHTML = `Temperature: <span>${conversion(temp).toFixed(2)}</span> F`;
-        descrip.innerHTML = `Sky Conditions: <span>${description}</span>`;
-        sunriseSearch.innerHTML = `Sunrise: <span>${sunriseGMT}</span>`;
-        sunsetSearch.innerHTML = `Sunset: <span>${sunsetGMT}</span>`;
-
-        console.log(data);
-        
-        
-    })
-})
-
-console.log(temp);
-
-//5 day forecast 3hr Int.
-
-//convert from m/s to mph
-function convertWindSpeed(val){
-    return val * 2.23694;
+function tempConversionF(val){
+    return ((val - 273) * 9/5 + 32).toFixed(2);
 }
 
 //convert wind direction to cardinal direction
@@ -139,67 +94,163 @@ function convertDirection(val) {
         return direction = "North West";
     }    
 };
+
+//get day name 
+function getDayName(unix) {
+    //create new date object, pass in unix time
+    const date = new Date(unix * 1000);
+
+// Use the getDay() method to get the day of the week as a number (0-6)
+const dayOfWeek = date.getDay();
+
+    // Create an array of day names
+const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+// Use the day of the week number to get the corresponding day name from the array
+return dayNames[dayOfWeek];
+
+}
+
+//get icon from API call
+function getIcon(icon) {
+    return 'https://openweathermap.org/img/wn/'+icon+'@2x.png';
+}
+
+ //Get local date for current time.
+ function readTime(unix) {
+    const time = new Date(unix * 1000);
+    const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: true };
+    return time.toLocaleString(undefined, timeOptions);
+}
+
+//local date to Timezone
+function localDate(unix, object) {
+    //assign unix time a date
+    const date = new Date(unix);
+    //assign the UTC offset in hours
+    const localOffset = object.timezone_offset / 3600;
+    //to get the desired offset, we will take the geo-local offset
+    //and add the searched cities local offset
+    const desiredOffset = (date.getTimezoneOffset() / 60) + localOffset;
+    //to get the desired date, add the desired offset in milliseconds
+    const desiredDate = new Date(date.getTime() + desiredOffset * 3600 * 1000);
+    //time options to display to local string.
+    const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: true };
+    // Apply the timezone offset to the date object.
+    //date.setHours(date.getHours() + offset);
+    return desiredDate.toLocaleString(undefined, timeOptions);
+}
+
 //variables for forecast
  var forecastAddBtn = document.querySelector('#forecast-add');
  var forecastInput = document.querySelector('#city-forecast-input');
  var forecastTemp = document.querySelector('#forecast-temp');
  var forecastCity = document.querySelector('#forecast-city-output');
- var forecastDescription = document.querySelector('#weather-description');
+ var forecastDescription = document.querySelector('.weather-description');
+ var currentCityTemp = document.querySelector('.current-temp');
+ var currentCityName = document.querySelector('#bold-city');
+ var currentCityTime = document.querySelector('#time')
+ var forecastSunrise = document.querySelector('.current-sunrise');
+ var forecastSunset = document.querySelector('.current-sunset');
+ var forecastWindSpeed = document.querySelector('.windspeed');
+ var forecastWindDir = document.querySelector('.wind-direction');
+ var forecastHumidity = document.querySelector('.humidity');
+ var day1Descrtiption = document.querySelector('.day-1-description')
 
  //event listener for forecast submit
  forecastAddBtn.addEventListener('click', () => {
-    const base = 'https://api.openweathermap.org/data/2.5/forecast?q='+forecastInput.value+'&appid='+api;
+    const base = 'http://api.openweathermap.org/geo/1.0/direct?q='+forecastInput.value+'&appid='+api;
+   
+
     //get json response
-    fetch(base).then((response) => {
-        return response.json();
-    }) 
-    // assign fetch 
-    .then((fetchResponse)=>{
-        console.log(fetchResponse);
-        let forecastCityString = `5 Day forecast for <span>${fetchResponse.city.name}`;
-        forecastCity.innerHTML = forecastCityString;
-        console.log(fetchResponse.list[0].weather[0].description);
-        //iteration through array
-        for( threeHourInt of fetchResponse.list) {
-            //assining data to variables
-            var {temp} = threeHourInt.main;
-            var {description} = threeHourInt.weather[0];
-            var {speed} = threeHourInt.wind;
-            var {deg} = threeHourInt.wind;
+    fetch(base).then((response) => response.json()) 
+     // assign fetch lat & long for One Call API
+    .then((data)=>{
+        console.log(data);
+        //variables from geo API
+        const cityLat = data[0].lat;
+        const cityLong = data[0].lon;
+        const cityName = data[0].name;
+        
 
-            //create new element for temp and time
-                const newTemp = document.createElement("p");
+        //One call API base decleration
+        const oneCallBase = 'https://api.openweathermap.org/data/3.0/onecall?lat='+cityLat+'&lon='+cityLong+'&exclude=minutely,hourly&appid='+api;
+        console.log(oneCallBase)
+        fetch(oneCallBase).then((response) => response.json()) 
+        // assign fetch 
+         .then((data)=>{
 
-            //assing ID value of new element
-                newTemp.setAttribute("class", "forecast-temp");
+           
 
-            //create string and append to created element
-                const tempString = document.createTextNode(`Temp at ${threeHourInt.dt_txt} is ${conversion(temp).toFixed(2)} *F`);
-                newTemp.appendChild(tempString);
-                console.log(newTemp.classList);
+                        console.log(data);
+                        //variables from oneCall API data
+                        
 
-            //repeat process for weather description
-                const newDescription = document.createElement("p");
-                const descriptionString = document.createTextNode(`Weather: ${description}`)
-                newDescription.appendChild(descriptionString);
+                        //getting search city current info
+                        const cityTime = data.current.dt;
+                        const {humidity, wind_speed, wind_deg, sunrise, sunset, temp} = data.current;
+                        const {description, icon} = data.current.weather[0];
 
-            //repeat process for Wind speed
-                const windSpeed = document.createElement("p");
-                const windString = document.createTextNode(`Wind speed is ${convertWindSpeed(speed).toFixed(1)}mph`)
-                windSpeed.appendChild(windString);
 
-            //repeat process for wind direction
-                const windDirection = document.createElement("p");
-                const directionString = document.createTextNode(`Wind Direction: ${convertDirection(deg)}`);
-                windDirection.appendChild(directionString);
+console.log(cityTime);
+console.log(cityTime * 1000);
 
-            //append newly created elements to existing element in document
-                const currentP = document.getElementById("forecast-display");
-                currentP.appendChild(newTemp);
-                currentP.appendChild(newDescription);
-                currentP.appendChild(windSpeed);
-                currentP.appendChild(windDirection);
+                        const currentTimeGMT = new Date(cityTime * 1000);
+                        const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                        const actualDate = currentTimeGMT.toLocaleDateString(undefined, dateOptions);
+                        const actualTime = localDate(cityTime * 1000, data);
+                        const actualSunrise = localDate(sunrise * 1000, data);
+                        const actualSunset = localDate(sunset * 1000, data);
 
-        }
+                        //getting search city forecast info
+
+
+            //need to use timezone offset I think to display the sunset and
+            //sunrise time in the searched cities timezone.
+
+                        //display current info
+                        currentCityName.textContent = `${cityName}`;
+                        currentCityTime.textContent = `${actualDate} at ${actualTime}`;
+                        currentCityTemp.textContent = `Temp: ${tempConversionF(temp)}°F`;
+                        forecastSunrise.textContent = `Sunrise: ${actualSunrise}`;
+                        forecastSunset.textContent = `Sunset: ${actualSunset}`;
+                        forecastWindSpeed.textContent = `Wind Speed: ${convertWindSpeed(wind_speed)} MPH`;
+                        forecastWindDir.textContent = `Wind Direction: ${convertDirection(wind_deg)}`;
+                        forecastDescription.textContent = `Weather Description: ${description}`;
+                        document.querySelector('.weather-icon').src = getIcon(icon);
+                        forecastHumidity.textContent = `Humidity: ${humidity}%`;
+
+                        //display 5 day forecast info
+                        document.querySelector('#day-1-description').textContent = getDayName(data.daily[1].dt);
+                        document.querySelector('#day-2-description').textContent = getDayName(data.daily[2].dt);
+                        document.querySelector('#day-3-description').textContent = getDayName(data.daily[3].dt);
+                        document.querySelector('#day-4-description').textContent = getDayName(data.daily[4].dt);
+                        document.querySelector('#day-5-description').textContent = getDayName(data.daily[5].dt);
+                        document.querySelector('#day-6-description').textContent = getDayName(data.daily[6].dt);
+                        document.querySelector('#day-7-description').textContent = getDayName(data.daily[7].dt);
+                        document.querySelector('#day-1-icon').src = getIcon(data.daily[1].weather[0].icon);
+                        document.querySelector('#day-2-icon').src = getIcon(data.daily[2].weather[0].icon);
+                        document.querySelector('#day-3-icon').src = getIcon(data.daily[3].weather[0].icon);
+                        document.querySelector('#day-4-icon').src = getIcon(data.daily[4].weather[0].icon);
+                        document.querySelector('#day-5-icon').src = getIcon(data.daily[5].weather[0].icon);
+                        document.querySelector('#day-6-icon').src = getIcon(data.daily[6].weather[0].icon);
+                        document.querySelector('#day-7-icon').src = getIcon(data.daily[7].weather[0].icon);
+                        document.querySelector('#day-1-max-temp').textContent = `High ${tempConversionF(data.daily[1].temp.max)}°F`;
+                        document.querySelector('#day-2-max-temp').textContent = `High ${tempConversionF(data.daily[2].temp.max)}°F`;
+                        document.querySelector('#day-3-max-temp').textContent = `High ${tempConversionF(data.daily[3].temp.max)}°F`;
+                        document.querySelector('#day-4-max-temp').textContent = `High ${tempConversionF(data.daily[4].temp.max)}°F`;
+                        document.querySelector('#day-5-max-temp').textContent = `High ${tempConversionF(data.daily[5].temp.max)}°F`;
+                        document.querySelector('#day-6-max-temp').textContent = `High ${tempConversionF(data.daily[6].temp.max)}°F`;
+                        document.querySelector('#day-7-max-temp').textContent = `High ${tempConversionF(data.daily[7].temp.max)}°F`;
+                        document.querySelector('#day-1-min-temp').textContent = `Low ${tempConversionF(data.daily[1].temp.min)}°F`;
+                        document.querySelector('#day-2-min-temp').textContent = `Low ${tempConversionF(data.daily[2].temp.min)}°F`;
+                        document.querySelector('#day-3-min-temp').textContent = `Low ${tempConversionF(data.daily[3].temp.min)}°F`;
+                        document.querySelector('#day-4-min-temp').textContent = `Low ${tempConversionF(data.daily[4].temp.min)}°F`;
+                        document.querySelector('#day-5-min-temp').textContent = `Low ${tempConversionF(data.daily[5].temp.min)}°F`;
+                        document.querySelector('#day-6-min-temp').textContent = `Low ${tempConversionF(data.daily[6].temp.min)}°F`;
+                        document.querySelector('#day-7-min-temp').textContent = `Low ${tempConversionF(data.daily[7].temp.min)}°F`;
+        })
     })
-});
+})
+
+    
