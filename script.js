@@ -32,6 +32,7 @@ window.addEventListener('load', () => {
                 const { sunrise, sunset } = data.sys;
                 const {deg, speed} = data.wind;
                 const fahrenheit = (temp * 9) / 5 + 32;
+                const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: true };
 
                 //converting epoch(Unix) time to GMT
                 const sunriseGMT = new Date(sunrise * 1000);
@@ -41,10 +42,10 @@ window.addEventListener('load', () => {
                 iconImg.src = getIcon(icon);
                 loc.textContent = `${place}`;
                 desc.textContent = `${description}`;
-                tempC.textContent = `${temp.toFixed(2)}°C`;
-                tempF.textContent = `${fahrenheit.toFixed(2)}°F`;
-                sunriseDOM.textContent = `${sunriseGMT}`;
-                sunsetDOM.textContent = `${sunsetGMT}`;
+                tempC.textContent = `${Math.round(temp)}°C`;
+                tempF.textContent = `${Math.round(fahrenheit)}°F`;
+                sunriseDOM.textContent = `${sunriseGMT.toLocaleString(undefined, timeOptions)}`;
+                sunsetDOM.textContent = `${sunsetGMT.toLocaleString(undefined, timeOptions)}`;
                 currentWindSpeed.textContent =`${speed} MPH`;
                 currentWindDir.textContent = `${convertDirection(deg)}`;
 
@@ -59,11 +60,11 @@ window.addEventListener('load', () => {
 
 //conversion functions
 function convertWindSpeed(val){
-    return (val * 2.23694).toFixed(2);
+    return (Math.round(val * 2.23694));
 }
 
 function tempConversionF(val){
-    return ((val - 273) * 9/5 + 32).toFixed(2);
+    return (Math.round((val - 273) * 9/5 + 32));
 }
 
 //convert wind direction to cardinal direction
