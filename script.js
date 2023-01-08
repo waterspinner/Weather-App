@@ -137,7 +137,6 @@ function localDate(unix, object) {
     //time options to display to local string.
     const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: true };
     // Apply the timezone offset to the date object.
-    //date.setHours(date.getHours() + offset);
     return desiredDate.toLocaleString(undefined, timeOptions);
 }
 
