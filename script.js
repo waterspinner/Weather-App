@@ -9,6 +9,7 @@ const sunriseDOM = document.querySelector('.sunrise');
 const sunsetDOM = document.querySelector('.sunset');
 const currentWindSpeed = document.querySelector('.current-windspeed');
 const currentWindDir = document.querySelector('.current-wind-direction');
+const currentHumidity = document.querySelector('.current-humidity');
 
 window.addEventListener('load', () => {
     let long;
@@ -48,6 +49,7 @@ window.addEventListener('load', () => {
                 sunsetDOM.textContent = `${sunsetGMT.toLocaleString(undefined, timeOptions)}`;
                 currentWindSpeed.textContent =`${speed} MPH`;
                 currentWindDir.textContent = `${convertDirection(deg)}`;
+                currentHumidity.textContent = `${humidity}%`;
 
 
 
@@ -117,13 +119,6 @@ function getIcon(icon) {
     return 'https://openweathermap.org/img/wn/'+icon+'@2x.png';
 }
 
- //Get local date for current time.
- function readTime(unix) {
-    const time = new Date(unix * 1000);
-    const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: true };
-    return time.toLocaleString(undefined, timeOptions);
-}
-
 //local date to Timezone
 function localDate(unix, object) {
     //assign unix time a date
@@ -158,10 +153,9 @@ function localDate(unix, object) {
  var day1Descrtiption = document.querySelector('.day-1-description')
 
  //event listener for forecast submit
- forecastAddBtn.addEventListener('click', () => {
+ forecastAddBtn.addEventListener('click', () => { //!!!!!!!!!!!!!!!!!!CAN MAKE THE WHOLE CITY TO LAT + LON A REFACTORED FUNCTION!!!!!!!!!!!!!!!!!!
+    //fetch data with city name
     const base = 'https://api.openweathermap.org/geo/1.0/direct?q='+forecastInput.value+'&appid='+api;
-   
-
     //get json response
     fetch(base).then((response) => response.json()) 
      // assign fetch lat & long for One Call API
@@ -190,11 +184,6 @@ function localDate(unix, object) {
                         const cityTime = data.current.dt;
                         const {humidity, wind_speed, wind_deg, sunrise, sunset, temp} = data.current;
                         const {description, icon} = data.current.weather[0];
-
-
-console.log(cityTime);
-console.log(cityTime * 1000);
-
                         const currentTimeGMT = new Date(cityTime * 1000);
                         const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         const actualDate = currentTimeGMT.toLocaleDateString(undefined, dateOptions);
@@ -202,11 +191,6 @@ console.log(cityTime * 1000);
                         const actualSunrise = localDate(sunrise * 1000, data);
                         const actualSunset = localDate(sunset * 1000, data);
 
-                        //getting search city forecast info
-
-
-            //need to use timezone offset I think to display the sunset and
-            //sunrise time in the searched cities timezone.
 
                         //display current info
                         currentCityName.textContent = `${cityName}`;

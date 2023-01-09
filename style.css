@@ -39,10 +39,9 @@ h3 {
 }
 
 .current-display {
-  box-shadow: 2px 2px 6px 1px rgb(0 0 0 / 15%), -2px -2px 6px 1px rgb(0 0 0 / 15%);
-    border-radius: 20px;
-    background: #4e76b3;
-    display: flex;
+  border-radius: 20px;
+  background: #4e76b3;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -78,24 +77,20 @@ h3 {
   }
 
 .city-box {
+  position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 5vh;
-  width: max-content;
-  max-width: 470px;
-  box-shadow: var(--background-shadow);
-    border-radius: 20px;
-    background: #fcfcfc;
-  margin: 12px;
+  flex-wrap: wrap;
+  align-items: stretch;
+  margin-right: 7vh;
 }
 
 .city-box-header {
   margin-left: 5px;
 }
 
-.city-search { 
-  margin: 7px;
+.city-search {
+  height: 4vh;
+  border: 2px solid black;
 }
 
 .city-submit {
@@ -138,6 +133,7 @@ h3 {
   display: flex;
   justify-self: center;
   align-self: center;
+  margin-left: 34vh;
 }
 
 .day {
@@ -158,12 +154,19 @@ h3 {
   padding-top: 15px;
 }
 
+#forecast-add {
+  height: 4vh;
+  width: 4vh;
+  border-bottom-right-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
 .title-div {
   width: 90%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .days {
@@ -175,10 +178,11 @@ h3 {
 
 .modal {
   border-radius: 10px;
-    text-align: center;
-    background: rgba(149, 205, 236, 0.22);
-    margin: 10px;
+  text-align: center;
+  background: rgba(149, 205, 236, 0.22);
+  margin: 10px 40px;
   box-shadow: var(--background-shadow);
+  padding: 5px;
   width: max-content;
 }
 
@@ -214,10 +218,7 @@ h3 {
   margin: 5px;
 }
 
-#name {
-  margin: 5px;
-}
-
 #time {
   margin: 5px;
 }
+
