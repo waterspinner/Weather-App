@@ -30,11 +30,13 @@
                     <div class="f">Error</div>
                 </div> 
                 <div class="info">
-                    <h4>Sunrise: <span class="sunrise">No Information Available</span></h4>
-                    <h4>Sunset: <span class="sunset">No Information Available</span></h4>
-                    <h4>Wind Speed: <span class="current-windspeed">No Information Available</span></h4>
-                    <h4>Wind Direction: <span class="current-wind-direction">No Information Available</span></h4>
-                    <h4>Humidity: <span class="current-humidity">No Information Available</span></h4>
+                    <ul style="list-style: none;">
+                        <li>Sunrise: <span class="sunrise">No Information Available</span></li>
+                        <li>Sunset: <span class="sunset">No Information Available</span></li>
+                        <li>Wind Speed: <span class="current-windspeed">No Information Available</span></li>
+                        <li>Wind Direction: <span class="current-wind-direction">No Information Available</span></li>
+                        <li>Humidity: <span class="current-humidity">No Information Available</span></li>
+                    </ul>
                 </div>
             </div>
             
@@ -57,9 +59,27 @@
                     
                     </div>
                     <div class="modal" id="current-weather-details">
-                         <div class="humidity" id="data"></div>
-                         <div class="windspeed" id="data"></div>
-                         <div class="wind-direction" id="data"></div>
+                        <ul style="list-style: none;">
+                             <li class="visibility-li">
+                                <strong>Visibility: </strong>
+
+                             </li>
+                             <li class="dewpoint-li">
+                                <strong>Dewpoint: </strong>
+                             </li>
+                             <li class="humidity-li" id="data">
+                                <strong>Humidity: </strong>
+                             </li>
+                             <li class="cloudiness-li">
+                                <strong>Cloudiness: </strong>
+                             </li>
+                             <li class="windspeed-li" id="data">
+                                <strong>Windspeed: </strong>
+                             </li>
+                             <li class="wind-direction-li" id="data">
+                                <strong>Wind Direction: </strong>
+                             </li>
+                        </ul>
                     </div>
                     <div class="modal" id="solar-details">
                          <div class="current-sunrise" id="data"></div>
@@ -69,43 +89,43 @@
                 <div class="days">
                     <div class="day" id="day-1">
                         <div class='day-name' id="day-1-description"></div>
-                        <img class='day-details' id="day-1-icon" src="" srcset="">
+                        <img class='day-details icon' id="day-1-icon" src="" srcset="">
                         <div class='day-details' id="day-1-max-temp"></div>
                         <div class='day-details' id="day-1-min-temp"></div>
                     </div>
                     <div class="day" id="day-2">
                         <div class='day-name' id="day-2-description"></div>
-                        <img class='day-details' id="day-2-icon" src="" srcset="">
+                        <img class='day-details icon' id="day-2-icon" src="" srcset="">
                         <div class='day-details' id="day-2-max-temp"></div>
                         <div class='day-details' id="day-2-min-temp"></div>
                     </div>
                     <div class="day" id="day-3">
                         <div class='day-name' id="day-3-description"></div>
-                        <img class='day-details' id="day-3-icon" src="" srcset="">
+                        <img class='day-details icon' id="day-3-icon" src="" srcset="">
                         <div class='day-details' id="day-3-max-temp"></div>
                         <div class='day-details' id="day-3-min-temp"></div>
                     </div>
                     <div class="day" id="day-4">
                         <div class='day-name' id="day-4-description"></div>
-                        <img class='day-details' id="day-4-icon" src="" srcset="">
+                        <img class='day-details icon' id="day-4-icon" src="" srcset="">
                         <div class='day-details' id="day-4-max-temp"></div>
                         <div class='day-details' id="day-4-min-temp"></div>
                     </div>
                     <div class="day" id="day-5">
                         <div class='day-name' id="day-5-description"></div>
-                        <img class='day-details' id="day-5-icon" src="" srcset="">
+                        <img class='day-details icon' id="day-5-icon" src="" srcset="">
                         <div class='day-details' id="day-5-max-temp"></div>
                         <div class='day-details' id="day-5-min-temp"></div>
                     </div>
                     <div class="day" id="day-6">
                         <div class='day-name' id="day-6-description"></div>
-                        <img class='day-details' id="day-6-icon" src="" srcset="">
+                        <img class='day-details icon' id="day-6-icon" src="" srcset="">
                         <div class='day-details' id="day-6-max-temp"></div>
                         <div class='day-details' id="day-6-min-temp"></div>
                     </div>
                     <div class="day" id="day-7">
                         <div class='day-name' id="day-7-description"></div>
-                        <img class='day-details' id="day-7-icon" src="" srcset="">
+                        <img class='day-details icon' id="day-7-icon" src="" srcset="">
                         <div class='day-details' id="day-7-max-temp"></div>
                         <div class='day-details' id="day-7-min-temp"></div>
                     </div>

@@ -153,6 +153,7 @@ function localDate(unix, object) {
  var day1Descrtiption = document.querySelector('.day-1-description')
 
  //event listener for forecast submit
+ //
  forecastAddBtn.addEventListener('click', () => { //!!!!!!!!!!!!!!!!!!CAN MAKE THE WHOLE CITY TO LAT + LON A REFACTORED FUNCTION!!!!!!!!!!!!!!!!!!
     //fetch data with city name
     const base = 'https://api.openweathermap.org/geo/1.0/direct?q='+forecastInput.value+'&appid='+api;
