@@ -61,11 +61,12 @@ window.addEventListener('load', () => {
 });
 
 
-//conversion functions
+//conversion wind Speed
 function convertWindSpeed(val){
     return (Math.round(val * 2.23694));
 }
 
+//convert Temp to Farhenheit
 function tempConversionF(val){
     return (Math.round((val - 273) * 9/5 + 32));
 }
@@ -204,7 +205,6 @@ function localDate(unix, object) {
                                 } 
                                = data.current;
                         const {description, icon} = data.current.weather[0];
-                        const currentTimeGMT = new Date(cityTime * 1000);
                         const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: true };
                         const actualTime = localDate(cityTime * 1000, data);
