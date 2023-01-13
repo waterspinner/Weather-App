@@ -24,6 +24,7 @@ body {
 
 h2 {
   font-weight: lighter;
+  font-size: xxx-large;
 }
 
 h3 {
@@ -178,12 +179,11 @@ h3 {
 
 .modal {
   border-radius: 10px;
-  text-align: center;
   background: rgba(149, 205, 236, 0.22);
   margin: 10px 40px;
   box-shadow: var(--background-shadow);
   padding: 5px;
-  width: max-content;
+  /* width: max-content; */
 }
 
 #current-weather {
@@ -216,9 +216,16 @@ h3 {
 
 #data {
   margin: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 #time {
   margin: 5px;
+}
+
+#current-weather-details {
+  width: 200px;
 }
 

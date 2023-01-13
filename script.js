@@ -11,6 +11,7 @@ const currentWindSpeed = document.querySelector('.current-windspeed');
 const currentWindDir = document.querySelector('.current-wind-direction');
 const currentHumidity = document.querySelector('.current-humidity');
 
+
 window.addEventListener('load', () => {
     let long;
     let lat;
@@ -114,6 +115,11 @@ return dayNames[dayOfWeek];
 
 }
 
+//convert from meters to miles
+function metersToMiles(meters){
+    return Math.round(meters *  0.00062137);
+}
+
 //get icon from API call
 function getIcon(icon) {
     return 'https://openweathermap.org/img/wn/'+icon+'@2x.png';
@@ -130,10 +136,8 @@ function localDate(unix, object) {
     const desiredOffset = (date.getTimezoneOffset() / 60) + localOffset;
     //to get the desired date, add the desired offset in milliseconds
     const desiredDate = new Date(date.getTime() + desiredOffset * 3600 * 1000);
-    //time options to display to local string.
-    const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: true };
     // Apply the timezone offset to the date object.
-    return desiredDate.toLocaleString(undefined, timeOptions);
+    return desiredDate;
 }
 
 //variables for forecast
@@ -142,16 +146,20 @@ function localDate(unix, object) {
  var forecastTemp = document.querySelector('#forecast-temp');
  var forecastCity = document.querySelector('#forecast-city-output');
  var forecastDescription = document.querySelector('.weather-description');
- var currentCityTemp = document.querySelector('.current-temp');
+ var currentCityTemp = document.querySelector('.current-temp-text');
  var currentCityName = document.querySelector('#bold-city');
  var currentCityTime = document.querySelector('#time')
  var forecastSunrise = document.querySelector('.current-sunrise');
  var forecastSunset = document.querySelector('.current-sunset');
- var forecastWindSpeed = document.querySelector('.windspeed');
- var forecastWindDir = document.querySelector('.wind-direction');
- var forecastHumidity = document.querySelector('.humidity');
- var day1Descrtiption = document.querySelector('.day-1-description')
-
+ var forecastWindSpeed = document.querySelector('.windspeed-text');
+ var forecastWindDir = document.querySelector('.wind-direction-text');
+ var forecastHumidity = document.querySelector('.humidity-text');
+ var forecastVisibility = document.querySelector('.visibility-text')
+ var forecastCloudiness = document.querySelector('.cloud-text');
+ var forecastDewPoint = document.querySelector('.dewpoint-text');
+ var currentSearchHigh = document.querySelector('.high');
+ var currentSearchLow = document.querySelector('.low');
+ var currentSearchFeelsLike =document.querySelector('.feels-like');
  //event listener for forecast submit
  //
  forecastAddBtn.addEventListener('click', () => { //!!!!!!!!!!!!!!!!!!CAN MAKE THE WHOLE CITY TO LAT + LON A REFACTORED FUNCTION!!!!!!!!!!!!!!!!!!
@@ -183,27 +191,47 @@ function localDate(unix, object) {
 
                         //getting search city current info
                         const cityTime = data.current.dt;
-                        const {humidity, wind_speed, wind_deg, sunrise, sunset, temp} = data.current;
+                        const {
+                                humidity,
+                                wind_speed,
+                                wind_deg,
+                                sunrise,
+                                sunset,
+                                temp,
+                                dew_point,
+                                visibility,
+                                clouds
+                                } 
+                               = data.current;
                         const {description, icon} = data.current.weather[0];
                         const currentTimeGMT = new Date(cityTime * 1000);
                         const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                        const actualDate = currentTimeGMT.toLocaleDateString(undefined, dateOptions);
+                        const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: true };
                         const actualTime = localDate(cityTime * 1000, data);
                         const actualSunrise = localDate(sunrise * 1000, data);
                         const actualSunset = localDate(sunset * 1000, data);
 
 
                         //display current info
+                        //city Info
                         currentCityName.textContent = `${cityName}`;
-                        currentCityTime.textContent = `${actualDate} at ${actualTime}`;
-                        currentCityTemp.textContent = `Temp: ${tempConversionF(temp)}°F`;
-                        forecastSunrise.textContent = `Sunrise: ${actualSunrise}`;
-                        forecastSunset.textContent = `Sunset: ${actualSunset}`;
-                        forecastWindSpeed.textContent = `Wind Speed: ${convertWindSpeed(wind_speed)} MPH`;
-                        forecastWindDir.textContent = `Wind Direction: ${convertDirection(wind_deg)}`;
+                        currentCityTime.textContent = `${actualTime.toLocaleDateString(undefined, dateOptions)} at ${actualTime.toLocaleString(undefined, timeOptions)}`;
+                        //Search city current info
+                        currentCityTemp.textContent = `${tempConversionF(temp)}°F`;
                         forecastDescription.textContent = `Weather Description: ${description}`;
                         document.querySelector('.weather-icon').src = getIcon(icon);
-                        forecastHumidity.textContent = `Humidity: ${humidity}%`;
+                        //Search City Atmospheric info        
+                        forecastVisibility.textContent = `${metersToMiles(visibility)} mi`;
+                        forecastDewPoint.textContent = `${tempConversionF(dew_point)}°F`;
+                        forecastHumidity.textContent = `${humidity}%`;
+                        forecastCloudiness.textContent = `${clouds}%`;
+                        forecastWindSpeed.textContent = `${convertWindSpeed(wind_speed)} MPH`;
+                        forecastWindDir.textContent = `${convertDirection(wind_deg)}`;
+                        //Search City Solar Details
+                        forecastSunrise.textContent = `Sunrise: ${actualSunrise}`;
+                        forecastSunset.textContent = `Sunset: ${actualSunset}`;
+                       
+                        
 
                         //display 5 day forecast info
                         document.querySelector('#day-1-description').textContent = getDayName(data.daily[1].dt);
