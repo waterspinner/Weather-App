@@ -228,8 +228,8 @@ function localDate(unix, object) {
                         forecastWindSpeed.textContent = `${convertWindSpeed(wind_speed)} MPH`;
                         forecastWindDir.textContent = `${convertDirection(wind_deg)}`;
                         //Search City Solar Details
-                        forecastSunrise.textContent = `Sunrise: ${actualSunrise.toLocaleString(undefined, timeOptions)}`;
-                        forecastSunset.textContent = `Sunset: ${actualSunset.toLocaleString(undefined, timeOptions)}`;
+                        forecastSunrise.textContent = `${actualSunrise.toLocaleString(undefined, timeOptions)}`;
+                        forecastSunset.textContent = `${actualSunset.toLocaleString(undefined, timeOptions)}`;
                        
                         
 
