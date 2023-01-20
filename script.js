@@ -141,30 +141,8 @@ function localDate(unix, object) {
     return desiredDate;
 }
 
-//variables for forecast
- var forecastAddBtn = document.querySelector('#forecast-add');
- var forecastInput = document.querySelector('#city-forecast-input');
- var forecastTemp = document.querySelector('#forecast-temp');
- var forecastCity = document.querySelector('#forecast-city-output');
- var forecastDescription = document.querySelector('.weather-description');
- var currentCityTemp = document.querySelector('.current-temp-text');
- var currentCityName = document.querySelector('#bold-city');
- var currentCityTime = document.querySelector('#time')
- var forecastSunrise = document.querySelector('.current-sunrise');
- var forecastSunset = document.querySelector('.current-sunset');
- var forecastWindSpeed = document.querySelector('.windspeed-text');
- var forecastWindDir = document.querySelector('.wind-direction-text');
- var forecastHumidity = document.querySelector('.humidity-text');
- var forecastVisibility = document.querySelector('.visibility-text')
- var forecastCloudiness = document.querySelector('.cloud-text');
- var forecastDewPoint = document.querySelector('.dewpoint-text');
- var currentSearchHigh = document.querySelector('.high');
- var currentSearchLow = document.querySelector('.low');
- var currentSearchFeelsLike =document.querySelector('.feels-like');
- //event listener for forecast submit
- //
- forecastAddBtn.addEventListener('click', () => { //!!!!!!!!!!!!!!!!!!CAN MAKE THE WHOLE CITY TO LAT + LON A REFACTORED FUNCTION!!!!!!!!!!!!!!!!!!
-    //fetch data with city name
+function searchedCity(Event){
+    Event.preventDefault()
     const base = 'https://api.openweathermap.org/geo/1.0/direct?q='+forecastInput.value+'&appid='+api;
     //get json response
     fetch(base).then((response) => response.json()) 
@@ -264,6 +242,34 @@ function localDate(unix, object) {
                         document.querySelector('#day-7-min-temp').textContent = `Low ${tempConversionF(data.daily[7].temp.min)}°F`;
         })
     })
-})
+}
+
+
+
+
+
+//variables for forecast
+ var forecastAddBtn = document.querySelector('.city-box');
+ var forecastInput = document.querySelector('#city-forecast-input');
+ var forecastTemp = document.querySelector('#forecast-temp');
+ var forecastCity = document.querySelector('#forecast-city-output');
+ var forecastDescription = document.querySelector('.weather-description');
+ var currentCityTemp = document.querySelector('.current-temp-text');
+ var currentCityName = document.querySelector('#bold-city');
+ var currentCityTime = document.querySelector('#time')
+ var forecastSunrise = document.querySelector('.current-sunrise');
+ var forecastSunset = document.querySelector('.current-sunset');
+ var forecastWindSpeed = document.querySelector('.windspeed-text');
+ var forecastWindDir = document.querySelector('.wind-direction-text');
+ var forecastHumidity = document.querySelector('.humidity-text');
+ var forecastVisibility = document.querySelector('.visibility-text')
+ var forecastCloudiness = document.querySelector('.cloud-text');
+ var forecastDewPoint = document.querySelector('.dewpoint-text');
+ var currentSearchHigh = document.querySelector('.high');
+ var currentSearchLow = document.querySelector('.low');
+ var currentSearchFeelsLike =document.querySelector('.feels-like');
+ //event listener for forecast submit
+ //
+ forecastAddBtn.addEventListener('submit', searchedCity);
 
     
