@@ -1,5 +1,6 @@
 api = '4bd7b47ded83d8fc3d3409055c606053'
 
+//current weather variables
 const iconImg = document.getElementById('weather-icon');
 const loc = document.querySelector('#location');
 const tempC = document.querySelector('.c');
@@ -11,17 +12,38 @@ const currentWindSpeed = document.querySelector('.current-windspeed');
 const currentWindDir = document.querySelector('.current-wind-direction');
 const currentHumidity = document.querySelector('.current-humidity');
 
+//variables for forecast
+var forecastAddBtn = document.querySelector('.city-box');
+var forecastInput = document.querySelector('#city-forecast-input');
+var forecastTemp = document.querySelector('#forecast-temp');
+var forecastCity = document.querySelector('#forecast-city-output');
+var forecastDescription = document.querySelector('.weather-description');
+var currentCityTemp = document.querySelector('.current-temp-text');
+var currentCityName = document.querySelector('#bold-city');
+var currentCityTime = document.querySelector('#time')
+var forecastSunrise = document.querySelector('.current-sunrise');
+var forecastSunset = document.querySelector('.current-sunset');
+var forecastWindSpeed = document.querySelector('.windspeed-text');
+var forecastWindDir = document.querySelector('.wind-direction-text');
+var forecastHumidity = document.querySelector('.humidity-text');
+var forecastVisibility = document.querySelector('.visibility-text')
+var forecastCloudiness = document.querySelector('.cloud-text');
+var forecastDewPoint = document.querySelector('.dewpoint-text');
+var currentSearchHigh = document.querySelector('.high');
+var currentSearchLow = document.querySelector('.low');
+var currentSearchFeelsLike =document.querySelector('.feels-like');
 
-window.addEventListener('load', () => {
+//event listener load - fetch current location
+window.addEventListener('load', () => { // need to refactor to a smaller function call fetching 
+                                        // geolocation and weather
     let long;
     let lat;
     //accessing geolocation 
     if(navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
+        navigator.geolocation.getCurrentPosition((position) => { //refactor to lat + lon function
             long = position.coords.longitude;
             lat = position.coords.latitude;
             const base = 'https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+long+'&appid='+api+'&units=metric';
-           // console.log(base);
             //using fetch to get data
             fetch(base).then((response) => {
                 return response.json();
@@ -51,9 +73,6 @@ window.addEventListener('load', () => {
                 currentWindSpeed.textContent =`${speed} MPH`;
                 currentWindDir.textContent = `${convertDirection(deg)}`;
                 currentHumidity.textContent = `${humidity}%`;
-
-
-
              console.log(data);
             });
         });
@@ -248,28 +267,8 @@ function searchedCity(Event){
 
 
 
-//variables for forecast
- var forecastAddBtn = document.querySelector('.city-box');
- var forecastInput = document.querySelector('#city-forecast-input');
- var forecastTemp = document.querySelector('#forecast-temp');
- var forecastCity = document.querySelector('#forecast-city-output');
- var forecastDescription = document.querySelector('.weather-description');
- var currentCityTemp = document.querySelector('.current-temp-text');
- var currentCityName = document.querySelector('#bold-city');
- var currentCityTime = document.querySelector('#time')
- var forecastSunrise = document.querySelector('.current-sunrise');
- var forecastSunset = document.querySelector('.current-sunset');
- var forecastWindSpeed = document.querySelector('.windspeed-text');
- var forecastWindDir = document.querySelector('.wind-direction-text');
- var forecastHumidity = document.querySelector('.humidity-text');
- var forecastVisibility = document.querySelector('.visibility-text')
- var forecastCloudiness = document.querySelector('.cloud-text');
- var forecastDewPoint = document.querySelector('.dewpoint-text');
- var currentSearchHigh = document.querySelector('.high');
- var currentSearchLow = document.querySelector('.low');
- var currentSearchFeelsLike =document.querySelector('.feels-like');
+
  //event listener for forecast submit
- //
  forecastAddBtn.addEventListener('submit', searchedCity);
 
     
