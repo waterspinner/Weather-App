@@ -180,14 +180,8 @@ function searchedCity(Event){
         fetch(oneCallBase).then((response) => response.json()) 
         // assign fetch 
          .then((data)=>{
-
-           
-
                         console.log(data);
                         //variables from oneCall API data
-                        
-
-                        //getting search city current info
                         const cityTime = data.current.dt;
                         const {
                                 humidity,
@@ -213,10 +207,12 @@ function searchedCity(Event){
                         //city Info
                         currentCityName.textContent = `${cityName}`;
                         currentCityTime.textContent = `${actualTime.toLocaleDateString(undefined, dateOptions)} at ${actualTime.toLocaleString(undefined, timeOptions)}`;
+                        
                         //Search city current info
                         currentCityTemp.textContent = `${tempConversionF(temp)}°F`;
                         forecastDescription.textContent = `Weather Description: ${description}`;
                         document.querySelector('.weather-icon').src = getIcon(icon);
+                        
                         //Search City Atmospheric info        
                         forecastVisibility.textContent = `${metersToMiles(visibility)} mi`;
                         forecastDewPoint.textContent = `${tempConversionF(dew_point)}°F`;
@@ -224,41 +220,18 @@ function searchedCity(Event){
                         forecastCloudiness.textContent = `${clouds}%`;
                         forecastWindSpeed.textContent = `${convertWindSpeed(wind_speed)} MPH`;
                         forecastWindDir.textContent = `${convertDirection(wind_deg)}`;
+                        
                         //Search City Solar Details
                         forecastSunrise.textContent = `${actualSunrise.toLocaleString(undefined, timeOptions)}`;
                         forecastSunset.textContent = `${actualSunset.toLocaleString(undefined, timeOptions)}`;
                        
-                        
-
-                        //display 5 day forecast info
-                        document.querySelector('#day-1-description').textContent = getDayName(data.daily[1].dt);
-                        document.querySelector('#day-2-description').textContent = getDayName(data.daily[2].dt);
-                        document.querySelector('#day-3-description').textContent = getDayName(data.daily[3].dt);
-                        document.querySelector('#day-4-description').textContent = getDayName(data.daily[4].dt);
-                        document.querySelector('#day-5-description').textContent = getDayName(data.daily[5].dt);
-                        document.querySelector('#day-6-description').textContent = getDayName(data.daily[6].dt);
-                        document.querySelector('#day-7-description').textContent = getDayName(data.daily[7].dt);
-                        document.querySelector('#day-1-icon').src = getIcon(data.daily[1].weather[0].icon);
-                        document.querySelector('#day-2-icon').src = getIcon(data.daily[2].weather[0].icon);
-                        document.querySelector('#day-3-icon').src = getIcon(data.daily[3].weather[0].icon);
-                        document.querySelector('#day-4-icon').src = getIcon(data.daily[4].weather[0].icon);
-                        document.querySelector('#day-5-icon').src = getIcon(data.daily[5].weather[0].icon);
-                        document.querySelector('#day-6-icon').src = getIcon(data.daily[6].weather[0].icon);
-                        document.querySelector('#day-7-icon').src = getIcon(data.daily[7].weather[0].icon);
-                        document.querySelector('#day-1-max-temp').textContent = `High ${tempConversionF(data.daily[1].temp.max)}°F`;
-                        document.querySelector('#day-2-max-temp').textContent = `High ${tempConversionF(data.daily[2].temp.max)}°F`;
-                        document.querySelector('#day-3-max-temp').textContent = `High ${tempConversionF(data.daily[3].temp.max)}°F`;
-                        document.querySelector('#day-4-max-temp').textContent = `High ${tempConversionF(data.daily[4].temp.max)}°F`;
-                        document.querySelector('#day-5-max-temp').textContent = `High ${tempConversionF(data.daily[5].temp.max)}°F`;
-                        document.querySelector('#day-6-max-temp').textContent = `High ${tempConversionF(data.daily[6].temp.max)}°F`;
-                        document.querySelector('#day-7-max-temp').textContent = `High ${tempConversionF(data.daily[7].temp.max)}°F`;
-                        document.querySelector('#day-1-min-temp').textContent = `Low ${tempConversionF(data.daily[1].temp.min)}°F`;
-                        document.querySelector('#day-2-min-temp').textContent = `Low ${tempConversionF(data.daily[2].temp.min)}°F`;
-                        document.querySelector('#day-3-min-temp').textContent = `Low ${tempConversionF(data.daily[3].temp.min)}°F`;
-                        document.querySelector('#day-4-min-temp').textContent = `Low ${tempConversionF(data.daily[4].temp.min)}°F`;
-                        document.querySelector('#day-5-min-temp').textContent = `Low ${tempConversionF(data.daily[5].temp.min)}°F`;
-                        document.querySelector('#day-6-min-temp').textContent = `Low ${tempConversionF(data.daily[6].temp.min)}°F`;
-                        document.querySelector('#day-7-min-temp').textContent = `Low ${tempConversionF(data.daily[7].temp.min)}°F`;
+                        //display 5 day forecast info                       
+                        for(let i = 1; i <= 7; i++){
+                            document.querySelector('#day-' + i + '-description').textContent = getDayName(data.daily[i].dt);
+                            document.querySelector('#day-' + i + '-icon').src = getIcon(data.daily[i].weather[0].icon);
+                            document.querySelector('#day-' + i + '-max-temp').textContent = `High ${tempConversionF(data.daily[i].temp.max)}°F`;
+                            document.querySelector('#day-' + i + '-min-temp').textContent = `Low ${tempConversionF(data.daily[i].temp.min)}°F`;
+                        }
         })
     })
 }
