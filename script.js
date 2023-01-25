@@ -162,6 +162,7 @@ function localDate(unix, object) {
 
 function searchedCity(Event){
     Event.preventDefault()
+    //need to make this first fetch a function, possibly make a few searched city functions?
     const base = 'https://api.openweathermap.org/geo/1.0/direct?q='+forecastInput.value+'&appid='+api;
     //get json response
     fetch(base).then((response) => response.json()) 
