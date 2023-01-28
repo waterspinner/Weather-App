@@ -163,7 +163,7 @@ function localDate(unix, object) {
     return desiredDate;
 }
 
-function forecast(data) {
+function fiveDayForecast(data) {
     for(let i = 1; i <= 7; i++){
         document.querySelector('#day-' + i + '-description').textContent = getDayName(data.daily[i].dt);
         document.querySelector('#day-' + i + '-icon').src = getIcon(data.daily[i].weather[0].icon);
@@ -172,7 +172,7 @@ function forecast(data) {
     }
 }
 
-function displayForecastData(base){
+function displayForecastData(base, cityName){
     fetch(base).then((response) => response.json()) 
     // assign fetch 
      .then((data)=>{
@@ -198,11 +198,11 @@ function displayForecastData(base){
                     const actualSunrise = localDate(sunrise * 1000, data);
                     const actualSunset = localDate(sunset * 1000, data);
                     //city Info
-                    
+                    currentCityName.textContent = `${cityName}`;
                     currentCityTime.textContent = `${actualTime.toLocaleDateString(undefined, dateOptions)} at ${actualTime.toLocaleString(undefined, timeOptions)}`;
                     //Search city current info
                     currentCityTemp.textContent = `${tempConversionF(temp)}°F`;
-                    forecastDescription.textContent = `Weather Description: ${description}`;
+                    forecastDescription.textContent = `${description}`;
                     document.querySelector('.weather-icon').src = getIcon(icon);
                     
                     //Search City Atmospheric info        
@@ -218,7 +218,7 @@ function displayForecastData(base){
                     forecastSunset.textContent = `${actualSunset.toLocaleString(undefined, timeOptions)}`;
                    
                     //display 5 day forecast info                       
-                    forecast(data);
+                    fiveDayForecast(data);
     })
 }
 
@@ -236,14 +236,12 @@ function searchedCity(Event){
         const cityLat = data[0].lat;
         const cityLong = data[0].lon;
         const cityName = data[0].name;
-        currentCityName.textContent = `${cityName}`;
+        
         
         //One call API base decleration
         const oneCallBase = 'https://api.openweathermap.org/data/3.0/onecall?lat='+cityLat+'&lon='+cityLong+'&exclude=minutely,hourly&appid='+api;
-        
-        console.log(oneCallBase)
         //Fectch and display forecast data
-        displayForecastData(oneCallBase)        
+        displayForecastData(oneCallBase, cityName)        
     })
 }
 
