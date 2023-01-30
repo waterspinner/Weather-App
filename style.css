@@ -34,8 +34,8 @@ h3 {
 .container-grid {
     width: 1200px;
     display: grid;
-    grid-template-columns: 2fr 7fr;
-    grid-template-rows: 1fr 6fr;
+    grid-template-columns: 0.4fr 1.4fr 0fr;
+    grid-template-rows: 0.1fr 1fr 1fr;
     height: 70vh;
 }
 
@@ -47,7 +47,7 @@ h3 {
   align-items: center;
   justify-content: center;
   margin: 15px;
-  grid-row: 1 / 5;
+  grid-row: 2 / 4;
   box-shadow: var(--background-shadow);
 }
 
@@ -106,13 +106,14 @@ h3 {
   border-radius: 5px;
   margin: 10px;
   background: #fcfcfc;
-  grid-row: 1 / 5;
+  grid-row: 2 / 4;
   box-shadow: var(--background-shadow);
-    border-radius: 20px;
-    background: #fcfcfc;
+  border-radius: 20px;
+  background: #fcfcfc;
 }
 
 .city-details {
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -131,10 +132,11 @@ h3 {
 }
 
 .dash {
-  display: flex;
-  justify-self: center;
-  align-self: center;
-  margin-left: 34vh;
+  /* display: flex; */
+  /* justify-self: center; */
+  /* align-self: center; */
+  /* margin-left: 34vh; */
+  /* grid-row: 1/ 2; */
 }
 
 .day {
@@ -163,11 +165,11 @@ h3 {
 }
 
 .title-div {
-  width: 90%;
+  /* width: 100%; */
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  align-items: end;
+  justify-content: flex-start;
 }
 
 .days {
@@ -233,4 +235,16 @@ h3 {
 
 .current-sunrise{
   margin-bottom: 40px;
+}
+
+.input-div {
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  justify-content: flex-end;
+}
+
+#current-city-name {
+  width: 100%;
+  text-align: center;
 }

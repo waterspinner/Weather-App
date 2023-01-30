@@ -12,136 +12,136 @@
 </head>
 
 <body>
-    <div class="title-div">
-        <h1 class="dash">Weather Dashboard</h1>
-        <form class="city-box">
-            <input class="city-search" type="text" placeholder="Search City" id="city-forecast-input">
-            <button  id="forecast-add" type="submit"><i class="fa fa-search"></i></button>
-        </form>
-    </div> 
-        <div class="container-grid">
-            <div class="current-display">
-                <img src="" srcset="" id="weather-icon">
-                <div id="location">Unable to Fetch Weather</div>
-                <div class="desc">No Information Available.</div>
-                <div class="weather">
-                    <div class="c">Error</div>
-                    <div class="circle"></div>
-                    <div class="f">Error</div>
-                </div> 
-                <div class="info">
-                    <ul style="list-style: none;">
-                        <li>Sunrise: <span class="sunrise">No Information Available</span></li>
-                        <li>Sunset: <span class="sunset">No Information Available</span></li>
-                        <li>Wind Speed: <span class="current-windspeed">No Information Available</span></li>
-                        <li>Wind Direction: <span class="current-wind-direction">No Information Available</span></li>
-                        <li>Humidity: <span class="current-humidity">No Information Available</span></li>
-                    </ul>
-                </div>
+    <div class="container-grid">
+        <div class="title-div">
+            <h1 class="dash">Weather Dashboard</h1>
+        </div> 
+        <div class="input-div">
+            <form class="city-box">
+                <input class="city-search" type="text" placeholder="Search City" id="city-forecast-input">
+                <button  id="forecast-add" type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+        <div class="current-display">
+            <img src="" srcset="" id="weather-icon">
+            <div id="location">Unable to Fetch Weather</div>
+            <div class="desc">No Information Available.</div>
+            <div class="weather">
+                <div class="c">Error</div>
+                <div class="circle"></div>
+                <div class="f">Error</div>
+            </div> 
+            <div class="info">
+                <ul style="list-style: none;">
+                    <li>Sunrise: <span class="sunrise">No Information Available</span></li>
+                    <li>Sunset: <span class="sunset">No Information Available</span></li>
+                    <li>Wind Speed: <span class="current-windspeed">No Information Available</span></li>
+                    <li>Wind Direction: <span class="current-wind-direction">No Information Available</span></li>
+                    <li>Humidity: <span class="current-humidity">No Information Available</span></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="city-display" id="forecast-display">
+           <div class="city-details">
+            <div class="modal" id="current-city-name">
+                <h2 id="name">Forecast in <span id="bold-city"></span></h2>
+                <h3 id="time"></h3>
             </div>
             
-            <div class="city-display" id="forecast-display">
-               <div class="city-details">
-                <div class="modal" id="current-city-name">
-                    <h2 id="name">Forecast in <span id="bold-city"></span></h2>
-                    <h3 id="time"></h3>
-                </div>
+           </div>
+            <div class="weather-data">
+                <div class="modal" id="current-weather">
+                     <div class="current-temp" id="data">
+                        <strong>Temp:</strong><p class="current-temp-text"></p>
+                     </div>
+                     <div class="high" id="data"></div>
+                     <div class="low" id="data"></div>
+                     <div class="feels-like" id="data"></div>
+                     <div class="weather-description" id="data"></div>
+                     <img class="weather-icon" src="" srcset="">
                 
-               </div>
-                <div class="weather-data">
-                    <div class="modal" id="current-weather">
-                         <div class="current-temp" id="data">
-                            <strong>Temp:</strong><p class="current-temp-text"></p>
-                         </div>
-                         <div class="high" id="data"></div>
-                         <div class="low" id="data"></div>
-                         <div class="feels-like" id="data"></div>
-                         <div class="weather-description" id="data"></div>
-                         <img class="weather-icon" src="" srcset="">
-                    
-                    </div>
-                    <div class="modal" id="current-weather-details">
-                        <ul style="list-style: none;">
-                             <li class="visibility-li" id="data">
-                                <strong>Visibility: </strong><p class="visibility-text"></p>
-
-                             </li>
-                             <li class="dewpoint-li" id="data">
-                                <strong>Dewpoint: </strong><p class="dewpoint-text"></p>
-                             </li>
-                             <li class="humidity-li" id="data">
-                                <strong>Humidity:   </strong><p class="humidity-text"></p>
-                             </li>
-                             <li class="cloudiness-li" id="data">
-                                <strong>Cloudiness:   </strong><p class="cloud-text"></p>
-                             </li>
-                             <li class="windspeed-li" id="data">
-                                <strong>Windspeed:    </strong><p class="windspeed-text"></p>
-                             </li>
-                             <li class="wind-direction-li" id="data">
-                                <strong>Wind Direction: </strong><p class="wind-direction-text"></p>
-                             </li>
-                        </ul>
-                    </div>
-                    <div class="modal" id="solar-details">
-                     <div  id="solar-data">
-                        <h4 class="solar-title" style="font-size: 22px">Sunrise</h4>
-                        <h3 class="current-sunrise"></h3>
-                     </div>
-                     <div  id="solar-data">
-                        <h4 class="solar-title" style="font-size: 22px">Sunset</h4>
-                        <h3 class="current-sunset"></h3>
-                     </div>
-                    </div>
                 </div>
-                <div class="days">
-                    <div class="day" id="day-1">
-                        <div class='day-name' id="day-1-description"></div>
-                        <img class='day-details icon' id="day-1-icon" src="" srcset="">
-                        <div class='day-details' id="day-1-max-temp"></div>
-                        <div class='day-details' id="day-1-min-temp"></div>
-                    </div>
-                    <div class="day" id="day-2">
-                        <div class='day-name' id="day-2-description"></div>
-                        <img class='day-details icon' id="day-2-icon" src="" srcset="">
-                        <div class='day-details' id="day-2-max-temp"></div>
-                        <div class='day-details' id="day-2-min-temp"></div>
-                    </div>
-                    <div class="day" id="day-3">
-                        <div class='day-name' id="day-3-description"></div>
-                        <img class='day-details icon' id="day-3-icon" src="" srcset="">
-                        <div class='day-details' id="day-3-max-temp"></div>
-                        <div class='day-details' id="day-3-min-temp"></div>
-                    </div>
-                    <div class="day" id="day-4">
-                        <div class='day-name' id="day-4-description"></div>
-                        <img class='day-details icon' id="day-4-icon" src="" srcset="">
-                        <div class='day-details' id="day-4-max-temp"></div>
-                        <div class='day-details' id="day-4-min-temp"></div>
-                    </div>
-                    <div class="day" id="day-5">
-                        <div class='day-name' id="day-5-description"></div>
-                        <img class='day-details icon' id="day-5-icon" src="" srcset="">
-                        <div class='day-details' id="day-5-max-temp"></div>
-                        <div class='day-details' id="day-5-min-temp"></div>
-                    </div>
-                    <div class="day" id="day-6">
-                        <div class='day-name' id="day-6-description"></div>
-                        <img class='day-details icon' id="day-6-icon" src="" srcset="">
-                        <div class='day-details' id="day-6-max-temp"></div>
-                        <div class='day-details' id="day-6-min-temp"></div>
-                    </div>
-                    <div class="day" id="day-7">
-                        <div class='day-name' id="day-7-description"></div>
-                        <img class='day-details icon' id="day-7-icon" src="" srcset="">
-                        <div class='day-details' id="day-7-max-temp"></div>
-                        <div class='day-details' id="day-7-min-temp"></div>
-                    </div>
+                <div class="modal" id="current-weather-details">
+                    <ul style="list-style: none;">
+                         <li class="visibility-li" id="data">
+                            <strong>Visibility: </strong><p class="visibility-text"></p>
+                         </li>
+                         <li class="dewpoint-li" id="data">
+                            <strong>Dewpoint: </strong><p class="dewpoint-text"></p>
+                         </li>
+                         <li class="humidity-li" id="data">
+                            <strong>Humidity:   </strong><p class="humidity-text"></p>
+                         </li>
+                         <li class="cloudiness-li" id="data">
+                            <strong>Cloudiness:   </strong><p class="cloud-text"></p>
+                         </li>
+                         <li class="windspeed-li" id="data">
+                            <strong>Windspeed:    </strong><p class="windspeed-text"></p>
+                         </li>
+                         <li class="wind-direction-li" id="data">
+                            <strong>Wind Direction: </strong><p class="wind-direction-text"></p>
+                         </li>
+                    </ul>
                 </div>
-                    
+                <div class="modal" id="solar-details">
+                 <div  id="solar-data">
+                    <h4 class="solar-title" style="font-size: 22px">Sunrise</h4>
+                    <h3 class="current-sunrise"></h3>
+                 </div>
+                 <div  id="solar-data">
+                    <h4 class="solar-title" style="font-size: 22px">Sunset</h4>
+                    <h3 class="current-sunset"></h3>
+                 </div>
+                </div>
             </div>
-
+            <div class="days">
+                <div class="day" id="day-1">
+                    <div class='day-name' id="day-1-description"></div>
+                    <img class='day-details icon' id="day-1-icon" src="" srcset="">
+                    <div class='day-details' id="day-1-max-temp"></div>
+                    <div class='day-details' id="day-1-min-temp"></div>
+                </div>
+                <div class="day" id="day-2">
+                    <div class='day-name' id="day-2-description"></div>
+                    <img class='day-details icon' id="day-2-icon" src="" srcset="">
+                    <div class='day-details' id="day-2-max-temp"></div>
+                    <div class='day-details' id="day-2-min-temp"></div>
+                </div>
+                <div class="day" id="day-3">
+                    <div class='day-name' id="day-3-description"></div>
+                    <img class='day-details icon' id="day-3-icon" src="" srcset="">
+                    <div class='day-details' id="day-3-max-temp"></div>
+                    <div class='day-details' id="day-3-min-temp"></div>
+                </div>
+                <div class="day" id="day-4">
+                    <div class='day-name' id="day-4-description"></div>
+                    <img class='day-details icon' id="day-4-icon" src="" srcset="">
+                    <div class='day-details' id="day-4-max-temp"></div>
+                    <div class='day-details' id="day-4-min-temp"></div>
+                </div>
+                <div class="day" id="day-5">
+                    <div class='day-name' id="day-5-description"></div>
+                    <img class='day-details icon' id="day-5-icon" src="" srcset="">
+                    <div class='day-details' id="day-5-max-temp"></div>
+                    <div class='day-details' id="day-5-min-temp"></div>
+                </div>
+                <div class="day" id="day-6">
+                    <div class='day-name' id="day-6-description"></div>
+                    <img class='day-details icon' id="day-6-icon" src="" srcset="">
+                    <div class='day-details' id="day-6-max-temp"></div>
+                    <div class='day-details' id="day-6-min-temp"></div>
+                </div>
+                <div class="day" id="day-7">
+                    <div class='day-name' id="day-7-description"></div>
+                    <img class='day-details icon' id="day-7-icon" src="" srcset="">
+                    <div class='day-details' id="day-7-max-temp"></div>
+                    <div class='day-details' id="day-7-min-temp"></div>
+                </div>
+            </div>
+                
         </div>
+    </div>
         <script src="script.js"></script>
 </body>
 
