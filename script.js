@@ -39,8 +39,15 @@ const currentSearchFeelsLike =document.querySelector('.feels-like');
 //event listener load - fetch current location
 window.addEventListener('load', () => { // need to refactor to a smaller function call fetching 
                                         // geolocation and weather
-    let long;
-    let lat;
+                
+             //load random city info
+             const randCity = ["Tokyo", "London", "New York", "Los Angeles", "Sydney", "Moscow", "Madrid", "Barcelona", "Capetown"]
+             const randIndex = Math.floor(Math.random() * 8);
+     
+             displayCityOnLoad(randCity[randIndex]);
+    
+     let long;
+     let lat;
     //accessing geolocation 
     if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => { //refactor to lat + lon function
@@ -77,9 +84,14 @@ window.addEventListener('load', () => { // need to refactor to a smaller functio
                 currentWindDir.textContent = `${convertDirection(deg)}`;
                 currentHumidity.textContent = `${humidity}%`;
              console.log(data);
+ 
             });
         });
     }
+    
+
+
+
 });
 
 
@@ -170,6 +182,27 @@ function fiveDayForecast(data) {
         document.querySelector('#day-' + i + '-max-temp').textContent = `High ${tempConversionF(data.daily[i].temp.max)}°F`;
         document.querySelector('#day-' + i + '-min-temp').textContent = `Low ${tempConversionF(data.daily[i].temp.min)}°F`;
     }
+}
+
+function displayCityOnLoad(city){
+    const base = 'https://api.openweathermap.org/geo/1.0/direct?q='+city+'&appid='+api;
+    //get json response
+    fetch(base).then((response) => response.json()) 
+     // assign fetch lat & long for One Call API
+    .then((data)=>{
+        console.log(data);
+        //variables from geo API
+        //Lat  & Lon needed for onecall API
+        const cityLat = data[0].lat;
+        const cityLong = data[0].lon;
+        const cityName = data[0].name;
+        
+        
+        //One call API base decleration
+        const oneCallBase = 'https://api.openweathermap.org/data/3.0/onecall?lat='+cityLat+'&lon='+cityLong+'&exclude=minutely,hourly&appid='+api;
+        //Fectch and display forecast data
+        displayForecastData(oneCallBase, cityName)        
+    })
 }
 
 function displayForecastData(base, cityName){
