@@ -63,7 +63,7 @@ window.addEventListener('load', () => { // need to refactor to a smaller functio
                 const {temp, humidity} = data.main
                 const place = data.name
                 const { description, icon } = data.weather[0];
-                const { sunrise, sunset } = data.sys;
+                const { sunrise, sunset, country } = data.sys;
                 const {deg, speed} = data.wind;
                 const fahrenheit = (temp * 9) / 5 + 32;
                 const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: true };
@@ -74,7 +74,7 @@ window.addEventListener('load', () => { // need to refactor to a smaller functio
 
                 //interacting with DOM to show data
                 iconImg.src = getIcon(icon);
-                loc.textContent = `${place}`;
+                loc.textContent = `${place}, ${country}`;
                 desc.textContent = `${description}`;
                 tempC.textContent = `${Math.round(temp)}°C`;
                 tempF.textContent = `${Math.round(fahrenheit)}°F`;
@@ -196,16 +196,17 @@ function displayCityOnLoad(city){
         const cityLat = data[0].lat;
         const cityLong = data[0].lon;
         const cityName = data[0].name;
+        const {state, country} = data[0];
         
         
         //One call API base decleration
         const oneCallBase = 'https://api.openweathermap.org/data/3.0/onecall?lat='+cityLat+'&lon='+cityLong+'&exclude=minutely,hourly&appid='+api;
         //Fectch and display forecast data
-        displayForecastData(oneCallBase, cityName)        
+        displayForecastData(oneCallBase, cityName, state, country)        
     })
 }
 
-function displayForecastData(base, cityName){
+function displayForecastData(base, cityName, state, country){
     fetch(base).then((response) => response.json()) 
     // assign fetch 
      .then((data)=>{
@@ -230,8 +231,9 @@ function displayForecastData(base, cityName){
                     const actualTime = localDate(cityTime * 1000, data);
                     const actualSunrise = localDate(sunrise * 1000, data);
                     const actualSunset = localDate(sunset * 1000, data);
+                    
                     //city Info
-                    currentCityName.textContent = `${cityName}`;
+                    currentCityName.textContent = `${cityName}, ${state}, ${country}`;
                     currentCityTime.textContent = `${actualTime.toLocaleDateString(undefined, dateOptions)} at ${actualTime.toLocaleString(undefined, timeOptions)}`;
                     //Search city current info
                     currentCityTemp.textContent = `${tempConversionF(temp)}°F`;
@@ -269,12 +271,12 @@ function searchedCity(Event){
         const cityLat = data[0].lat;
         const cityLong = data[0].lon;
         const cityName = data[0].name;
-        
+        const {state, country} = data[0];
         
         //One call API base decleration
         const oneCallBase = 'https://api.openweathermap.org/data/3.0/onecall?lat='+cityLat+'&lon='+cityLong+'&exclude=minutely,hourly&appid='+api;
         //Fectch and display forecast data
-        displayForecastData(oneCallBase, cityName)        
+        displayForecastData(oneCallBase, cityName, state, country)       
     })
 }
 
