@@ -131,13 +131,7 @@ h3 {
   font-size: 1rem;
 }
 
-.dash {
-  /* display: flex; */
-  /* justify-self: center; */
-  /* align-self: center; */
-  /* margin-left: 34vh; */
-  /* grid-row: 1/ 2; */
-}
+
 
 .day {
   height: max-content;
@@ -255,7 +249,6 @@ input {
 
 li{
   border-bottom: 2px solid rgb(124, 124, 124);
-  border-bo: 4px;
 }
 
 .current-display li {
