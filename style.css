@@ -248,3 +248,16 @@ h3 {
   width: 100%;
   text-align: center;
 }
+
+input {
+  padding-left: 10px;
+}
+
+li{
+  border-bottom: 2px solid rgb(124, 124, 124);
+  border-bo: 4px;
+}
+
+.current-display li {
+  border: none;
+}
