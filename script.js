@@ -282,6 +282,7 @@ function searchedCity(Event){
 
 
  //event listener for forecast submit
+ console.log(forecastAddBtn);
  forecastAddBtn.addEventListener('submit', searchedCity);
 
     
