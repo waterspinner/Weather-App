@@ -100,13 +100,13 @@ h3 {
 
 .city-display {
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   flex-direction: column;
   justify-content: space-between;
   border-radius: 5px;
   margin: 10px;
   background: #fcfcfc;
-  grid-row: 2 / 4;
+  grid-row: 2;
   box-shadow: var(--background-shadow);
   border-radius: 20px;
   background: #fcfcfc;
