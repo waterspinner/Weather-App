@@ -263,7 +263,7 @@ function displayForecastData(base, cityName, state, country){
 function searchedCity(Event){
     Event.preventDefault()
     //Search by city name input
-    const base = 'https://api.openweathermap.org/geo/1.0/direct?q='+forecastInput.value+'&appid='+api;
+    const base = 'https://api.openweathermap.org/geo/1.0/direct?q='+forecast.input.value+'&appid='+api;
     //get json response
     fetch(base).then((response) => response.json()) 
      // assign fetch lat & long for One Call API
