@@ -13,22 +13,25 @@ const currentWindDir = document.querySelector('.current-wind-direction');
 const currentHumidity = document.querySelector('.current-humidity');
 
 //variables for forecast
-const forecastAddBtn = document.querySelector('.city-box');
-const forecastInput = document.querySelector('#city-forecast-input');
-const forecastTemp = document.querySelector('#forecast-temp');
-const forecastCity = document.querySelector('#forecast-city-output');
-const forecastDescription = document.querySelector('.weather-description');
+
+const forecast = {
+    addBtn: document.querySelector('.city-box'),
+    city: document.querySelector('#forecast-city-output'),
+    clouds: document.querySelector('.cloud-text'),
+    description: document.querySelector('.weather-description'),
+    dewPoint: document.querySelector('.dewpoint-text'),
+    humidity: document.querySelector('.humidity-text'),
+    input: document.querySelector('#city-forecast-input'),
+    sunrise: document.querySelector('.current-sunrise'),
+    sunset: document.querySelector('.current-sunset'),
+    windDir: document.querySelector('.wind-direction-text'),
+    windSpeed: document.querySelector('.windspeed-text'),
+    visibility: document.querySelector('.visibility-text')
+};
+
 const currentCityTemp = document.querySelector('.current-temp-text');
 const currentCityName = document.querySelector('#bold-city');
 const currentCityTime = document.querySelector('#time')
-const forecastSunrise = document.querySelector('.current-sunrise');
-const forecastSunset = document.querySelector('.current-sunset');
-const forecastWindSpeed = document.querySelector('.windspeed-text');
-const forecastWindDir = document.querySelector('.wind-direction-text');
-const forecastHumidity = document.querySelector('.humidity-text');
-const forecastVisibility = document.querySelector('.visibility-text')
-const forecastCloudiness = document.querySelector('.cloud-text');
-const forecastDewPoint = document.querySelector('.dewpoint-text');
 const currentSearchHigh = document.querySelector('.high');
 const currentSearchLow = document.querySelector('.low');
 const currentSearchFeelsLike =document.querySelector('.feels-like');
@@ -237,20 +240,20 @@ function displayForecastData(base, cityName, state, country){
                     currentCityTime.textContent = `${actualTime.toLocaleDateString(undefined, dateOptions)} at ${actualTime.toLocaleString(undefined, timeOptions)}`;
                     //Search city current info
                     currentCityTemp.textContent = `${tempConversionF(temp)}°F`;
-                    forecastDescription.textContent = `${description}`;
+                    forecast.description.textContent = `${description}`;
                     document.querySelector('.weather-icon').src = getIcon(icon);
                     
                     //Search City Atmospheric info        
-                    forecastVisibility.textContent = `${metersToMiles(visibility)} mi`;
-                    forecastDewPoint.textContent = `${tempConversionF(dew_point)}°F`;
-                    forecastHumidity.textContent = `${humidity}%`;
-                    forecastCloudiness.textContent = `${clouds}%`;
-                    forecastWindSpeed.textContent = `${convertWindSpeed(wind_speed)} MPH`;
-                    forecastWindDir.textContent = `${convertDirection(wind_deg)}`;
+                    forecast.visibility.textContent = `${metersToMiles(visibility)} mi`;
+                    forecast.dewPoint.textContent = `${tempConversionF(dew_point)}°F`;
+                    forecast.humidity.textContent = `${humidity}%`;
+                    forecast.clouds.textContent = `${clouds}%`;
+                    forecast.windSpeed.textContent = `${convertWindSpeed(wind_speed)} MPH`;
+                    forecast.windDir.textContent = `${convertDirection(wind_deg)}`;
                     
                     //Search City Solar Details
-                    forecastSunrise.textContent = `${actualSunrise.toLocaleString(undefined, timeOptions)}`;
-                    forecastSunset.textContent = `${actualSunset.toLocaleString(undefined, timeOptions)}`;
+                    forecast.sunrise.textContent = `${actualSunrise.toLocaleString(undefined, timeOptions)}`;
+                    forecast.sunset.textContent = `${actualSunset.toLocaleString(undefined, timeOptions)}`;
                    
                     //display 5 day forecast info                       
                     fiveDayForecast(data);
@@ -282,7 +285,6 @@ function searchedCity(Event){
 
 
  //event listener for forecast submit
- console.log(forecastAddBtn);
- forecastAddBtn.addEventListener('submit', searchedCity);
+ forecast.addBtn.addEventListener('submit', searchedCity);
 
     
